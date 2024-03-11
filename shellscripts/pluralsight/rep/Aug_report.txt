@@ -1,0 +1,18 @@
+drwxr-xr-x   7 root     admin   224B 24 Aug 10:59 ..
+drwxr-xr-x   2 GUKMOHD  staff    64B 29 Aug 15:02 .android
+drwxr-xr-x   3 GUKMOHD  staff    96B  5 Aug 11:06 .cisco
+-rw-r--r--   1 GUKMOHD  staff     0B  5 Aug 10:26 .localized
+drwx------   7 GUKMOHD  staff   224B 29 Aug 15:36 .ssh
+drwxr-xr-x   4 GUKMOHD  staff   128B  5 Aug 11:57 .vscode
+-rw-r--r--@  1 GUKMOHD  staff   156B 30 Aug 10:52 .zprofile
+drwxr-xr-x   3 GUKMOHD  staff    96B 30 Aug 11:04 .zsh
+-rw-r--r--@  1 GUKMOHD  staff   457B 30 Aug 11:11 .zshrc.pre-oh-my-zsh
+drwx------@  4 GUKMOHD  staff   128B  5 Aug 11:57 Applications
+drwxr-xr-x   2 GUKMOHD  staff    64B  5 Aug 11:06 Certs
+drwx------@  8 GUKMOHD  staff   256B 31 Aug 09:24 Documents
+drwx------   4 GUKMOHD  staff   128B  5 Aug 13:16 Movies
+drwx------+  4 GUKMOHD  staff   128B 31 Aug 15:12 Music
+lrwxr-xr-x   1 GUKMOHD  staff    57B  5 Aug 11:40 OneDrive - Volkswagen AG -> /Users/GUKMOHD/Library/CloudStorage/OneDrive-VolkswagenAG
+drwx------+  4 GUKMOHD  staff   128B  5 Aug 11:31 Pictures
+drwxr-xr-x   3 GUKMOHD  staff    96B  5 Aug 12:09 Postman
+drwxr-xr-x+  4 GUKMOHD  staff   128B  5 Aug 10:26 Public

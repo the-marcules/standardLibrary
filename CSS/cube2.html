@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+        </title>
+        <style>
+              :root {
+                --scanner-color: lawngreen;
+                --scanner-opacity: 0.7;
+            }
+            body{
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                height: 100vh;
+                background:  #FFF;
+            }
+        
+            .scene {
+                position: relative;
+                perspective: 1000px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border: 2px solid #f9bf00;
+                width: 800px;
+                height: 800px;
+                overflow: clip;
+                background: radial-gradient(#000000 0%, #424242 100%);
+                shape-outside: circle(50%);
+                border-radius: 400px;
+                }
+
+            .scanner {
+                width: 800px;
+                height: 10px;
+                background-color: var(--scanner-color);
+                opacity: var(--scanner-opacity);
+                animation: updown linear;
+                animation-duration: 7s;
+                animation-iteration-count: infinite;
+                position: absolute;
+                box-shadow: 0px 0px 15px var(--scanner-color);
+                backdrop-filter: invert(70%);
+                -webkit-backdrop-filter: invert(70%);
+            }
+
+  @keyframes updown {
+                0% {
+                    top: 0px
+                }
+                50% {
+                    top: 800px
+                }
+                100% {
+                    top: 0px
+                }
+            }
+
+            .cube {
+                position: relative;
+                width: 300px;
+                height: 300px;
+                transform-style: preserve-3d;
+                transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+                }
+
+            .cube__face {
+                opacity: 0.99;
+                position: absolute;
+                border: 1px solid #111;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: end;
+                background: linear-gradient(rgb(80, 48, 0), rgb(139, 97, 7))
+            }
+
+            .cube__face--front  { transform: rotateY( 180deg) translateZ(75px); width: 400px; height: 300px;}
+            .cube__face--right  { transform: rotateY( 90deg) translateZ(325px);  width:150px; height: 300px;}
+            .cube__face--back   { transform: rotateZ(0deg) translateZ(75px); width: 400px; height: 300px; }
+            .cube__face--left   { transform: rotateY(-90deg) translateZ(75px);  width: 150px; height: 300px;}
+            .cube__face--top    { transform: rotateX( 90deg) translateZ(75px);  width: 400px; height: 150px;}
+            .cube__face--bottom { transform: rotateX(-90deg) translateZ(225px); width: 400px; height: 150px;}
+
+            .rotation {
+                animation: rollTheDice linear;
+                animation-duration: 10s;
+                animation-iteration-count: infinite;
+            }
+            .package-label{
+                width: 40px;
+                background-color: #FFF;
+                font-size: 9px;
+                margin-left: 50px;
+                align-self: flex-start;
+                padding: 10px;
+                border-radius: 4px;
+                border: 1px solid #333;
+            }
+            .barcode {
+                margin-top: 6px;
+                border-top: 1px solid #000;
+                letter-spacing: -2px;
+            }
+
+            .line {
+                width: inherit;
+                height: 20px;
+                background: linear-gradient(rgba(0,0,0,0.2) 45%,rgba(0,0,0,1), rgba(0,0,0,0.2) 55%)
+            }
+            .mmeLabel {
+                background: linear-gradient(rgb(200, 191, 127), beige);
+                height: 30px;
+                width: 80px;
+                border-radius: 10px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-right: -1px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -5px 5px 10px #333;
+                border: 1px solid #333;
+            }
+
+            @keyframes rollTheDice {
+                from {
+                    transform: rotateY(180deg); 
+                }
+                to {
+                    transform: rotateY(540deg) rotateX(360deg);
+                }
+            }
+                
+        </style>
+    </head>
+
+    <body>
+       
+        <div class="scene">
+            <div class="cube rotation">
+                <div class="cube__face cube__face--front"><div class="package-label"><strong>To:</strong><br>AUDI<br>I/ER-422<br>Ingolstadt<div class="barcode">||| || | |  ||| || || || | | | ||</div></div><div class="line"></div><div class="mmeLabel">.mme</div></div>
+                <div class="cube__face cube__face--back"><div class="mmeLabel">.dingdong</div></div>
+                <div class="cube__face cube__face--right"><div class="mmeLabel">.pho</div></div>
+                <div class="cube__face cube__face--left"><div class="mmeLabel">.video</div></div>
+                <div class="cube__face cube__face--top"><div class="mmeLabel">.chn</div></div>
+                <div class="cube__face cube__face--bottom"><div class="mmeLabel">.attribute</div></div>
+            </div>
+            
+            <!-- <div class="scanner"></div> -->
+        </div>
+    </body>
+
+</html>

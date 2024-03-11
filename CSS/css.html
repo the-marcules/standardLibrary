@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <title>
+
+        </title>
+        <style>
+            /* ATTACH ARROW TO BOX */
+            /* border of arrow */
+            .container:before {
+                width: 44px;
+                height: 21px;
+                background-color: lightslategray;
+                clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+                display: block;
+                content: '';
+                position: absolute;
+                left: 68px;
+                top: -21px;
+            }
+            /* body of arrow */
+            .container::after {
+                width: 40px;
+                height: 20px;
+                background-color: inherit;
+                clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+                display: block;
+                content: '';
+                position: absolute;
+                left: 70px;
+                top: -20px;
+            } 
+            /* text container */
+            .container {
+                position: relative;
+                margin-top: 100px;
+                background-color: aliceblue;
+                border: 1px solid lightslategray;
+                padding: 20px;
+                filter: drop-shadow(0px 5px 10px #333);
+            }
+
+            
+
+            /* CLIP PATH WITH ANIMATION */
+            .dot{
+                /* margin-top: 50px; */
+                margin-right: 15px;
+                width: 200px;
+                aspect-ratio: 1;
+                clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+                shape-outside:polygon(0% 100%, 50% 0%, 100% 100%) ;
+                background-color: #333;
+                float: left;
+            }
+            /* Trigger animation */
+            .dot:hover {
+                animation: 2s circle ;
+            }
+            /* define animation */
+            @keyframes circle {
+                0% { clip-path: circle(50%); }
+                50% { 
+                    clip-path: circle(25%); 
+                    background-color: wheat;
+                }
+                100% { clip-path: circle(50%); }
+            }
+
+            .table1 {
+                background-color: lightcoral;
+                padding: 18px;
+                th, td {
+                    margin: 0;
+
+                }
+                th {
+                    background-color: aqua;
+                    border-bottom: 4px solid #333;
+                }
+            }
+            
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. etuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo</p>
+        </div>
+
+        <div class="dot"></div>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. etuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo</p>
+        
+        <table class="table1">
+            <thead>
+                <tr>
+                    <th>cap 1</th>
+                    <th>cap 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>con 1</td>
+                    <td>content 2</td>            
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

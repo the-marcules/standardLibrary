@@ -1,0 +1,132 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background: radial-gradient(#FFFFFF, #c8c8c8);
+    overflow: hidden;
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+}
+
+#list {
+    border: 1px dashed #8f8f8f;
+    padding: 0;
+    width: 400px;
+    height: 350px;
+    background-color: #a8a8a8;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    overflow: auto;
+
+}
+ #list .listItem {
+    background: #dddddd;
+    box-sizing: border-box;
+    display: grid;
+    column-gap: 12px;
+    grid-template-columns: min-content auto 24px;
+    grid-template-rows: 24px auto;
+    grid-template-areas:
+            "icon header cta"
+            ". stateText cta";
+
+    width: 100%;
+    color: #333333;
+    border-bottom: 1px solid rgb(50, 50, 50);
+    padding: 16px 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+#list div.fadeOut {
+    animation: collapse 500ms linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes collapse {
+    0%{
+
+    }
+    99% {
+        flex-shrink: 1;
+        flex-grow: 0;
+        padding: 0 24;
+        border-width: 0;
+        height: 0;
+    }
+    100% {
+        flex: 0;
+        display: none;
+    }
+}
+
+/* #list .listItem {
+    background: #dddddd;
+    box-sizing: border-box;
+    display: grid;
+    column-gap: 12px;
+    grid-template-columns: min-content auto 24px;
+    grid-template-rows: 24px auto;
+    grid-template-areas:
+            "icon header cta"
+            ". stateText cta";
+
+    width: 100%;
+    color: #333333;
+    border-bottom: 1px solid rgb(50, 50, 50);
+    padding: 16px 24px;
+    overflow: hidden;
+}
+
+#list div.fadeOut {
+    animation: animationFadeOut;
+    animation-duration: 800ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+
+    
+}
+
+@keyframes animationFadeOut{
+    0%{
+        opacity: 1;
+    }
+  
+    100% {
+        transform: scaleY(0) translateY(1);
+        border-width: 0px;
+        padding: 0px 24px;
+        height: 0px;
+        opacity: 0;
+
+    }
+}
+*/
+
+
+.icon {
+    grid-area: icon;
+    display: inline-block;
+    width: 24px;
+    border: 1px solid #333;
+    border-radius: 24px;
+    text-align: center;
+}
+.itemHeading {
+    grid-area: header;
+}
+.subtitle {
+    grid-area: stateText;
+}
+.cta {
+    grid-area: cta;
+} 

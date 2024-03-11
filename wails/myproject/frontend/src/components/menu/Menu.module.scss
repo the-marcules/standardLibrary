@@ -1,0 +1,23 @@
+.mainNav {
+    background-color: rgba(255,255,255,0.1);
+    margin-top: 0;
+    ul {
+        margin-top: 0;
+        display: flex;
+        list-style-type: none;
+        li{
+            margin: 6px;
+            background-color: rgba(255,255,255,0.1);
+            padding: 2px 10px;
+            border-radius: 8px;
+            a {
+                color: #FFF;
+                text-decoration: none;
+            }
+            a:hover{
+                color: #41b5ff;
+            }
+        }
+    }
+}
+

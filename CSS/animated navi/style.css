@@ -1,0 +1,140 @@
+:root {
+    --translate-Z: 433px;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+header {
+    width: 100vw;
+    perspective: 1500px;
+    border: 1px dashed hotpink;
+    transform: rotateX(100dege);
+}
+.navi {
+    list-style-type: none;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 500px;
+    height: 100px;
+    margin: 200px auto;
+    display: flex;
+    justify-content: center;
+    transform: rotateY(45deg)  rotateX(10deg);
+    animation: rotate;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.face {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-variant: small-caps;
+    color: transparent;
+    position: absolute;
+    height: 75px;
+    width: 500px;
+    background-color: lightblue;
+    border: 1px solid rgba(87, 127, 140,0.3);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    font-size: 4em;
+}
+
+.face a {
+    text-decoration: none;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(87, 127, 140);
+}
+.face a:hover {
+    -webkit-text-stroke: 1px rgb(175, 251, 0);
+    filter: drop-shadow( 0px 0px 5px rgb(175, 251, 0));
+    
+}
+
+.one {
+    transform: rotateY(0deg) translateZ(var(--translate-Z));
+}
+
+.two {
+    transform: rotateY(60deg) translateZ(var(--translate-Z));
+}
+
+.three {
+    transform: rotateY(120deg) translateZ(var(--translate-Z));
+}
+.four {
+    transform: rotateY(180deg) translateZ(var(--translate-Z));
+}
+.five {
+    transform: rotateY(240deg) translateZ(var(--translate-Z));
+}
+.six {
+    transform: rotateY(-60deg) translateZ(var(--translate-Z));
+}
+
+
+.xAxis, .zAxis {
+    text-align: right;
+}
+
+.yAxis {
+    width: 2px;
+    height: 200px;
+    background-color: red;
+    display: flex;
+    align-items: flex-end;
+}
+.xAxis {
+    height: 2px;
+    width: 200px;
+    background-color: blue;
+}
+
+.zAxis {
+    width: 2px;
+    height: 200px;
+    background-color: rgb(0, 65, 0);
+    transform: translateX(-202px) translateY(-100px) translateZ(100px) rotateX(90deg) rotateY(90deg);
+    display: flex;
+    align-items: flex-end;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateY(0deg) rotateX(10deg);
+    }
+    20% {
+       
+    }
+    40% {
+
+    }
+    60% {
+
+    }
+    80% {
+
+    }
+    100% {
+        transform: rotateY(-360deg) rotateX(10deg);
+    }
+}
+
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    text-align: center;
+    position: relative;
+
+}

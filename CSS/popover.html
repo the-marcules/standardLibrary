@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>
+
+        </title>
+        <style>
+            /* ATTACH ARROW TO BOX */
+            /* border of arrow */
+            .container:before {
+                width: 44px;
+                height: 21px;
+                background-color: lightslategray;
+                clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+                display: block;
+                content: '';
+                position: absolute;
+                left: 68px;
+                top: -21px;
+            }
+            /* body of arrow */
+            .container::after {
+                width: 40px;
+                height: 20px;
+                background-color: inherit;
+                clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+                display: block;
+                content: '';
+                position: absolute;
+                left: 70px;
+                top: -20px;
+            } 
+            /* text container */
+            .container {
+                position: absolute;
+                top: calc(100% + 30px);
+                background-color: aliceblue;
+                border: 1px solid lightslategray;
+                padding: 20px;
+                filter: drop-shadow(0px 5px 10px #333);
+            }   
+            
+            .parent {
+                position: relative;
+                background-color: aquamarine;
+                
+            }
+            .someOtherelement {
+                height: 100px;
+                width: 300px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="container">
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. etuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo</p>
+            </div>
+            <div class="someOtherElement">Hallo
+                sie
+                ahhh
+            </div>
+
+        </div>
+
+    
+    </body>
+</html>
