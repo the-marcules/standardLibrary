@@ -1,0 +1,309 @@
+:root {
+    --header-height: 150px;
+    --footer-height: 100px;
+    /* 
+    https://www.youtube.com/watch?v=UmzFk68Bwdk
+    */
+}
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    margin: 0;
+    background: radial-gradient(#FFFFFF, #626d84);
+}
+
+.header {
+    height: var(--header-height);
+    width: 100vw;
+    background: #FFFFFF;
+    margin: 0;
+    border-bottom: 1px solid #333;
+    filter: drop-shadow( 0px 0px 10px #333);
+    padding: 20px 20px;
+    box-sizing: border-box;    
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    animation: shrinkHeader;
+    animation-duration: 100ms;
+    animation-timeline: scroll();
+    animation-fill-mode: forwards;
+    backdrop-filter: blur(2px);
+}
+
+@keyframes shrinkHeader {
+    0% { height: var(--header-height);}
+    3%, 100% {
+        height: calc(var(--header-height) * 0.33);
+        padding: 5px 20px;  
+        background-color: #FFFFFF99;
+        border-bottom: 1px solid #33333340;
+
+        filter: none;
+    }
+}
+
+.header::after{
+    animation: logoToHeader;
+    animation-duration: 100ms;
+    animation-timeline: scroll();
+    animation-fill-mode: forwards;
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: calc(50vw - 50px);
+    height: 100px;
+    width: 100px;
+    transform: scale(0);
+    clip-path: circle(50%);
+    opacity: 0;
+    background-color: #FFFFFF;
+}
+@keyframes logoToHeader {
+    0% {
+        
+    }
+    3%, 100% {
+        opacity: 1;
+       transform: scale(1);
+    }
+}
+
+
+.logo {
+    position: relative;
+    animation: shrinkLogoToHeader;
+    animation-duration: 100ms;
+    animation-timeline: scroll();
+    animation-range: exit;
+    animation-fill-mode: forwards;
+    z-index: 10;
+    transform-origin: center;
+}
+@keyframes shrinkLogoToHeader {
+    0% {
+       
+        transform: scale(1);
+    }
+    10% {
+        transform: scale(0.15);
+    }
+    99% , 100% {
+        position: fixed;
+        top: 10px;
+         transform: scale(0.15);
+    }
+}
+
+
+.title{
+    font-weight: bold;
+    font-size: 2em;
+}
+
+
+nav {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    ul {
+        height: inherit;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        li {
+            height: inherit;
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 0 1px;
+            width: 100px;
+            a {
+                width: inherit;
+                display: inline-flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                height: inherit;
+                color: rgb(15, 96, 126);
+                text-decoration: none;
+                background-color: #00dfeb;
+                padding: 5px;
+                box-sizing: border-box;
+            }
+            a:hover {
+                background-color: lime;
+            }
+            a:visited {
+                color: rgb(15, 96, 126);
+
+            }
+        }
+    }
+}
+
+
+.scrollIndicator {
+    position: relative;
+    height: 5px;
+    width: 100%;
+    background-color: #333;
+    left: -20px;
+}
+.scrollIndicator::after{
+        position: absolute;
+        background-color: red;
+        content: "";
+        top: 1;
+        left: 0;
+        height: 3px;
+        width: 1%;
+        animation: scrollIndi 1s;
+        animation-fill-mode: forwards;
+        animation-timeline: scroll();
+}
+
+@keyframes scrollIndi {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+
+
+.scrollTop {
+  
+    padding: 0;
+    position: fixed;
+    height: 40px;
+    width:  40px;
+    top: calc(100vh - var(--footer-height) - 43px);
+    left: calc(100vw - 50px);
+    opacity: 0;
+    transform: scale(0);
+   
+    animation: showScrollTop;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timeline: view(50% 10%);
+    
+    & a {
+        text-decoration: none;
+        color: black;
+         background-color: #33333340;
+    border: 1px solid #33333380;
+        padding: 0;
+        margin: 0;
+        display: block;
+        width: inherit;
+        height: inherit;
+          display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    a:hover {
+        color: orange;
+          background-color: rgba(255, 166, 0, 0.4);
+          border: 1px solid orange;
+    }
+}
+
+
+@keyframes showScrollTop {
+   20% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+.main{
+    margin-top: calc(var(--header-height) );
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+section {
+    background-color: #33333380;
+    height: 100vh;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.content {
+    margin-top: 30px;
+    padding: 30px;
+    position: relative;
+    line-height: 1.4em;
+    box-sizing: border-box;
+    color: #FFFFFF;
+}
+
+
+section {
+    animation: scrollFade;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timeline: view();
+    animation-range: 100px 300px;
+    opacity: 0.5;
+    transform: scale(0.5);
+    /* transform-origin: bottom; */
+}
+
+img {
+    clip-path: circle(50%);
+}
+
+@keyframes scrollFade{
+    0% {
+        opacity: 0.5;
+        transform: scale(0.5);
+    }
+   100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+footer{
+    margin-top: 30px;
+    height: var(--footer-height);
+    background-color: #FFFFFF;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section[id=section1] {
+    background-image: url('./assets/got-stark.jpg');
+    background-size: contain;    
+}
+
+section[id=section2] {
+    background-image: url('./assets/ischia-vesuv.jpg');
+    background-size: contain;    
+}
+
+section[id=section3] {
+    background-image: url('./assets/witcher.jpg');
+    background-size: contain;    
+}
+
+section[id=section4] {
+    background-image: url('./assets/witcher1.jpg');
+    background-size: contain;    
+}

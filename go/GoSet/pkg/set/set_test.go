@@ -29,7 +29,7 @@ func Test_NewSet(t *testing.T) {
 		require.Equal(t, want.container, got.container)
 	})
 
-	t.Run("init a new set with a number", func(t *testing.T) {
+	t.Run("init a new set with numbers", func(t *testing.T) {
 		set := NewSet[int](1, 2, 3, 4)
 
 		expected := &Set[int]{
