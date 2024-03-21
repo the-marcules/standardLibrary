@@ -92,7 +92,7 @@ body{
         transform: scale(0.15);
     }
     99% , 100% {
-        position: fixed;
+        position: sticky;
         top: 10px;
          transform: scale(0.15);
     }
