@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+
+        </title>
+        <script>
+            function closeModal() {
+                document.querySelector("dialog").close();
+            }
+        </script>
+        <style>
+            .rot {
+                background-color: red;
+            } 
+            #id {
+                border: 1px solid blue;
+            } 
+            p {
+               color:aqua; 
+               font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            p:nth-child(odd){
+                color: red;
+            }
+            a {
+                text-decoration: none;
+            }
+            a:hover {
+                color: red;
+            }
+
+            p.paragraph {
+                color: black;
+            }
+            p.paragraph::first-letter{
+                font-size: 3em;
+            }
+
+
+            div.flexBox {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                gap: 20px;
+                width: 100%;
+                padding: 10px;
+                border: 1px solid limegreen;
+                box-sizing: border-box;
+                div {
+                    border: 1px solid green;
+                    width: 100%;
+                }
+            }
+
+
+            div.gridBox {
+                display: grid;
+                grid-template-areas: 
+                    "one ." 
+                    "two three";
+                grid-template-columns: 60% auto;
+                gap: 10px;
+                padding: 10px;
+                border: 1px solid limegreen;
+                margin-top: 50px;
+                position: relative;
+
+                &::after {
+                    content: "::before gridBox";
+                    position: absolute;
+                    top: -20px;
+                    left: 0;
+                }
+            }
+            .gridChildOne {
+                grid-area: one;
+                background-color: paleturquoise;
+            }
+            .gridChildTwo {
+                grid-area: two;
+                background-color: lightcoral;
+
+            }
+            .gridChildThree {
+                background-color: lightgreen;
+                grid-area: three;
+            }
+
+            dialog {
+            
+                box-sizing: border-box;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+            }
+
+        
+       
+
+            dialog::backdrop {
+                background-image: linear-gradient(
+                    45deg,
+                    magenta,
+                    rebeccapurple,
+                    dodgerblue,
+                    green
+                );
+                opacity: 0.75;
+}
+       
+
+        </style>
+    </head>
+    <body>
+        <div class="rot">rot</div>
+        <div id="id">id</div>
+        <p>p</p>
+        <p>p2</p>
+        <p>p2</p>
+        <p>p2</p>
+        <a href="#">test</a>
+        <p class="paragraph">
+            Lorem ipsum... bla
+        </p>
+        <div class="flexBox">
+            <div class="flexChildOne">1</div>
+            <div class="flexChildTwo">2</div>
+            <div class="flexChildThree">3</div>
+        </div>
+        
+        <div class="gridBox">
+            <div class="gridChildOne">1</div>
+            <div class="gridChildTwo">2</div>
+            <div class="gridChildThree">3</div>
+
+        </div>
+
+
+        <!-- <dialog>
+            <button class="modalCloseButton" onclick="closeModal()" autofocus>close</button>
+            <p>
+                Some modal content
+            </p>
+        </dialog> -->
+
+    </body>
+</html>
