@@ -1,0 +1,44 @@
+version: '3'
+
+vars:
+  GLOBAL_VAR1: "i'm global"
+  
+
+tasks:
+
+  test:
+    desc: testing
+    vars:
+      SOME_OTHER1: '{{default "empty1" .A}}'
+      SOME_OTHER2: '{{default "empty2" .B}}'
+    cmds:
+      - |
+        echo "hallo {{.GLOBAL_VAR1}} {{.SOME_OTHER1}} {{.SOME_OTHER2}}"
+
+  loadEnv:
+    desc: load env
+    cmds:
+      - |
+        echo "loading env"
+        source .env
+        echo $STAGE
+        echo {{.STAGE}}
+  readFromEnv:
+    desc: read env -> set from .env via source .env
+    deps:
+      - loadEnv   
+    vars:
+      ST: '{{default "empty stage" .STAGE}}'
+      SE: '{{default "empty server" .SERVER}}'
+    cmds:
+      - |
+        task loadEnv
+        echo "hallo {{.GLOBAL_VAR1}} STAGE:{{.ST}} SERVER:{{.SE}}"
+        echo "hallo $STAGE $SERVER"
+        echo $STAGE
+    
+  echoEnv:
+    desc: echo 
+    cmds:
+      - |
+        echo '{{.STAGE}}'
