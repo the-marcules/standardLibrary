@@ -1,0 +1,21 @@
+FROM ubuntu:latest
+
+WORKDIR /app
+
+COPY . .
+
+
+RUN apt-get update && apt-get install -y curl gnupg
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+
+RUN node -v
+RUN npm -v
+
+
+RUN npm install
+RUN npm run build
+
+EXPOSE 8080
+
+CMD ["node" "dist/index.js"]
