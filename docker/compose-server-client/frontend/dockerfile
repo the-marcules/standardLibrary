@@ -4,13 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-
 RUN node -v
 RUN npm -v
-
 
 RUN npm install
 RUN npm run build
 
-
-# CMD ["node" "dist/index.js"]
+CMD ["node", "dist/index.js"]

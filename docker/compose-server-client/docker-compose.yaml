@@ -1,0 +1,33 @@
+version: '3'
+services:
+  proxy:
+    depends_on:
+      - backend
+      - frontend
+    build:
+      context: proxy
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+  backend:
+    container_name: "backend"
+    build: 
+      context: backend
+      dockerfile: dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+
+  frontend:
+    container_name: "frontend"
+    depends_on:
+      - backend
+    build:
+      context: frontend
+      dockerfile: dockerfile
+    networks:
+      - app_network
+networks:
+   app_network:
+    driver: bridge
