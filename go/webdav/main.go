@@ -3,83 +3,103 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"encoding/pem"
 	"fmt"
-	"github.com/studio-b12/gowebdav"
+	wd "github.com/emersion/go-webdav"
 	"golang.org/x/crypto/pkcs12"
+	"golang.org/x/net/context"
 	"net/http"
 	"os"
+	"time"
 )
 
-func main() {
-	a := NewApp()
-	noProxyTransport, err := a.initCom()
+const (
+	certPath = "testdata/keystore.p12"
+	certPin  = "1234"
+)
+
+type WebDavResponse struct {
+	Err error  `json:"error"`
+	Msg string `json:"msg"`
+}
+
+type WebDavCommunicator struct {
+	client *wd.Client
+	url    string
+	ctx    context.Context
+	cancel context.CancelFunc
+}
+
+func NewWebDavCommunicator(url string, timeOut ...time.Duration) *WebDavCommunicator {
+
+	ctx, cancel := context.WithCancel(context.Background())
+	if timeOut != nil {
+		ctx, cancel = context.WithTimeout(context.Background(), timeOut[0])
+	}
+
+	transport, err := createHttpTransportWithClientCert()
 	if err != nil {
-		println(err.Error())
+		panic(err)
 	}
-	a.doTest(noProxyTransport, "GUKMOHD")
-}
 
-type App struct {
-	stage    string // todo: what about stage?
-	dtsHost  string
-	certPath string
-	certPin  string
-	proxyUrl string
-	//disableUploadDT         bool
-	//testConnectionDT        bool
-	//enableAttemptIdInUpload bool
-}
-
-func NewApp() App {
-	dtsHost := os.Getenv("DTS_HOST")
-	certPath := os.Getenv("CERT_PATH")
-	certPin := os.Getenv("CERT_PIN")
-	proxyUrl := os.Getenv("MY_HTTPS_PROXY")
-
-	return App{
-		dtsHost:  dtsHost,
-		certPath: certPath,
-		certPin:  certPin,
-		proxyUrl: proxyUrl,
+	httpClient := &http.Client{
+		Transport:     transport,
+		CheckRedirect: nil,
+		Jar:           nil,
+		Timeout:       0,
 	}
-}
 
-func (a App) doTest(transportWithClientCert *http.Transport, username string) {
-	webdavClient := gowebdav.NewClient("https://"+a.dtsHost, "anonymous", "")
-	webdavClient.SetTransport(transportWithClientCert)
-	err := webdavClient.Connect()
+	webDavClient, err := wd.NewClient(httpClient, url)
 	if err != nil {
-		println(err)
+		panic(err)
 	}
-	dir, err := webdavClient.ReadDir("/")
-	//dir, err := webdavClient.ReadDir("/"+username) ??
+
+	return &WebDavCommunicator{
+		client: webDavClient,
+		url:    url,
+		ctx:    ctx,
+		cancel: cancel,
+	}
+}
+
+func (w *WebDavCommunicator) GetStat(fileName string) *WebDavResponse {
+
+	stat, err := w.client.Stat(w.ctx, fileName)
 	if err != nil {
-		println(err)
+		stat, err = w.client.Stat(w.ctx, fileName)
 	}
 
-	for _, info := range dir {
-		fmt.Printf("+ %s", info.Name())
+	msgString, _ := json.Marshal(stat)
+	return &WebDavResponse{Err: err, Msg: string(msgString)}
+}
 
-		if info.Name() == username && info.IsDir() {
-			println("dir is present")
-		}
+func (w *WebDavCommunicator) PutFile(fileName string, remoteFilename string) *WebDavResponse {
+	fileContents, err := os.ReadFile(fileName)
+	if err != nil {
+		return &WebDavResponse{Err: err}
+	}
+	writer, createErr := w.client.Create(w.ctx, remoteFilename)
+	if createErr != nil {
+		return &WebDavResponse{Err: createErr}
+	}
+
+	writtenBytes, writeErr := writer.Write(fileContents)
+	_ = writer.Close()
+
+	return &WebDavResponse{
+		Err: writeErr,
+		Msg: fmt.Sprintf("written %d bytes", writtenBytes),
 	}
 }
 
-func (a App) initCom() (*http.Transport, error) {
-
-	noProxyTransport, err := a.createHttpTransportWithClientCert()
-
-	return noProxyTransport, err
-}
-func (a App) createHttpTransportWithClientCert() (*http.Transport, error) {
-	data, err := os.ReadFile(a.certPath)
+func createHttpTransportWithClientCert() (*http.Transport, error) {
+	data, err := os.ReadFile(certPath)
 	if err != nil {
 		return nil, err
 	}
 
-	pemBlocks, err := pkcs12.ToPEM(data, a.certPin)
+	pemBlocks, err := pkcs12.ToPEM(data, certPin)
 	if err != nil {
 		return nil, err
 	}
