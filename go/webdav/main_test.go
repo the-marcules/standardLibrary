@@ -152,6 +152,29 @@ func TestWebDavResponse_PutFile(t *testing.T) {
 		wg.Wait()
 		t.Logf("finished %d runs of %d", i, batch)
 	})
+
+	t.Run("put file should not return an error", func(t *testing.T) {
+		server := SetupFakeDtServer(t)
+		webDavClient := NewWebDavCommunicator(server.URL)
+
+		startTime := time.Now().Unix()
+		fmt.Printf("starttime %d", startTime)
+
+		remoteFileName := "testdata/C8521DB.zip")
+
+		response := webDavClient.PutFile("testdata/C8521DB.zip", remoteFileName)
+		require.NoError(t, response.Err, "got error on putting but should not")
+
+		response = webDavClient.GetStat(remoteFileName)
+		require.NoError(t, response.Err, "should not return an error, on finding file")
+
+		var stat webdav.FileInfo
+		err := json.Unmarshal([]byte(response.Msg), &stat)
+		require.NoError(t, err)
+
+		require.GreaterOrEqual(t, stat.ModTime.Unix(), startTime)
+
+	})
 }
 
 func SetupFakeDtServer(t *testing.T) *httptest.Server {
