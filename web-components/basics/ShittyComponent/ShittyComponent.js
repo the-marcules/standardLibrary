@@ -5,9 +5,9 @@ class ShittyElement extends HTMLElement {
         const shadow = this.attachShadow({ mode: 'open' })
         const wrapper = document.createElement('div')
         wrapper.setAttribute('id', 'wrapper')
-        
+
         const title = document.createElement('h2')
-        title.setAttribute('id','title')
+        title.setAttribute('id', 'title')
 
         const description = document.createElement('div')
         description.setAttribute('id', 'description')
@@ -16,35 +16,36 @@ class ShittyElement extends HTMLElement {
         wrapper.appendChild(description)
 
         // Lade die externe CSS-Datei
-        const linkElement = document.createElement('link');
-        linkElement.setAttribute('rel', 'stylesheet');
-        linkElement.setAttribute('href', `./${this.#ComponentName}/style.css`); // Der Pfad zu deiner CSS-Datei
+        const linkElement = document.createElement('link')
+        linkElement.setAttribute('rel', 'stylesheet')
+        linkElement.setAttribute('href', `./${this.#ComponentName}/style.css`) // Der Pfad zu deiner CSS-Datei
 
-
-        shadow.appendChild(linkElement);
-        shadow.appendChild(wrapper);
-
+        shadow.appendChild(linkElement)
+        shadow.appendChild(wrapper)
     }
-    
+
     connectedCallback() {
         this.updateContent()
     }
 
     static get observedAttributes() {
-        return ['title', 'description'];
+        return ['title', 'description']
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-            console.log(`Attribut ${name} geändert von ${oldValue} zu ${newValue}`);
-            this.updateContent();
+            // console.log(`Attribut ${name} geändert von ${oldValue} zu ${newValue}`);
+            this.updateContent()
         }
     }
 
-
     updateContent() {
-        this.shadowRoot.querySelector('h2#title').textContent = `💩 ${this.getAttribute('title')}`
-        this.shadowRoot.querySelector('div#description').textContent = `${this.getAttribute('description')}`
+        this.shadowRoot.querySelector(
+            'h2#title'
+        ).textContent = `💩 ${this.getAttribute('title')}`
+        this.shadowRoot.querySelector(
+            'div#description'
+        ).textContent = `${this.getAttribute('description')}`
     }
 }
 

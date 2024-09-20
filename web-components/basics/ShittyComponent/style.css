@@ -1,5 +1,6 @@
 * {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+        sans-serif;
 }
 
 div#wrapper {
@@ -11,6 +12,13 @@ div#wrapper {
     box-shadow: 0px 0px 10px #33333322;
     display: inline-block;
     margin: 10px;
+
+    &:hover {
+        box-shadow: 0px 0px 10px #078ffe22;
+        & > h2 {
+            background-color: green;
+        }
+    }
 
     & > h2 {
         margin-top: 0;
