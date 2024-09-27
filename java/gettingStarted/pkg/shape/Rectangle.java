@@ -4,10 +4,15 @@ public class Rectangle implements ShapeInterface {
      double a;
      double b;
 
-    public Rectangle(double a, double b) {
+     public Rectangle(double a, double b) {
         this.a = a;
         this.b = b;
-    }
+     }
+    
+     public Rectangle(double a) {
+        this.a = a;
+        this.b = a;
+     }
     
     public double getA() {
         return a;

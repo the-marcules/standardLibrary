@@ -9,8 +9,10 @@ public class Main {
   public void main(String[] args) {
       ArrayList<ShapeInterface> shapes = new ArrayList<>();
       shapes.add(new Rectangle(2,2));
-      shapes.add(new Circle(5));
+      shapes.add(new Rectangle(4));
+      shapes.add(new Square(4));
       shapes.add(new Square(5));
+      shapes.add(new Circle(5));
 
       for ( ShapeInterface shape : shapes) {
         this.CalculateAll(shape);
