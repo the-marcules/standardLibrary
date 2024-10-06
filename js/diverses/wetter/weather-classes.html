@@ -1,0 +1,157 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style rel="css/stylesheet">
+            * {
+                box-sizing:border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            canvas{
+                 background-color:inherit;
+            }   
+
+            div.grid-container {
+            display: grid;
+            grid-gap: 0px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            background-color: #FFF;
+            padding: 2px;
+            }
+
+         
+            
+            #currentWeather {
+                background-color: skyblue;
+                background-image: linear-gradient(to bottom right, rgba(0, 120, 175,0.7), rgba(0, 57, 83, 0.3));
+                border-radius: 5px;
+                height: 200px;
+            }
+            
+           
+                /* div#weatherData-text {
+                
+                }
+                div#temp {
+                
+                }
+                div#wind{
+                
+                } */
+
+            div#wind-icon, div#icon, div#wetter-details {
+                padding: 0px;
+                text-align: center;
+                float: left;
+                margin: 0px;
+              
+            }
+
+            div#wetter-details {
+                width: 50%;
+            }       
+
+            div#wind-icon {
+                width: 25%;
+                padding-top: 20px;
+                padding-bottom: 20px;
+
+            }
+            div#icon {
+                width: 25%;
+            }
+
+
+
+            div#forecast{
+                clear: left;
+                background-color:rgb(255, 255, 255);
+                grid-gap: 2px;
+                overflow-x:hidden;
+                overflow-y:hidden;
+                border-top: 1px solid #cccccc;
+                border-bottom: 1px solid #cccccc;
+            } 
+           
+
+            div.grid-item {
+                background-image: linear-gradient(to bottom right, rgba(0, 120, 175,0.7), rgba(0, 57, 83, 0.3));
+                text-align: center;
+                border-radius: 5px;
+            }
+
+            div.border-right {
+                border-right: 1px solid #cccccc;
+                padding-right: 5px;
+            }
+            div.fc-date {
+                background-color:rgba(0, 57, 83, 0.3);
+                border-radius: 5px;
+                margin: 0px;
+                padding: 2px;
+            }
+            div.canvas-container {
+                margin: 5px 0px 5px 0px;
+                padding-bottom: 5px;
+            }
+
+            @media screen and (max-width:800px) {
+                .grid-item {
+                    height: auto;
+                    margin-bottom: 2px;
+                }
+
+                div#wind-icon, div#icon, div#wetter-details {
+                width: 100%;
+                text-align: center;
+                float: none;
+              
+                }
+
+                #currentWeather {
+                    height: auto;
+                }
+
+            }
+
+        </style>
+        <script src="classes.js"></script>
+        <script>
+            const wetterApi = new WeatherApiCall(
+                'https://api.openweathermap.org/data/2.5/onecall',
+                [
+                    {name: "lat", value:"49.770"},
+                    {name: "lon", value:"11.408"},
+                    {name: "appid", value:"950fb8be66fdae5f7c9eb58cba59d8b8"},
+                    {name: "units", value:"metric"},
+                    {name: "lang", value:"de"}
+                ]);  // lat=49.770&lon=11.408&appid=950fb8be66fdae5f7c9eb58cba59d8b8&units=metric&lang=de
+            
+            (async function holeWetter(){
+            const wetter = await wetterApi.get();
+            
+           
+            const display = new WeatherRender(wetter, 'wetter');
+            display.currentWeather();
+            display.forecastWeather();
+         
+           
+
+        })();
+        </script>
+    </head>
+   
+    <body>
+       
+     
+      <div id="wetter" class="">
+         
+      </div>
+    </body>
+</html>        
+
+       

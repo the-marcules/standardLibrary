@@ -1,0 +1,121 @@
+
+        <style rel="css/stylesheet">
+            div.grid-container {
+            display: grid;
+            grid-gap: 0px;
+            background-color: #FFF;
+            padding: 2px;
+            }
+            div#icon{
+                grid-column: 1;
+                grid-row: 1 / span 3;
+            }
+            div#wetter-text {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            div#temp {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            div#wind{
+                grid-column: 2;
+                grid-row: 3;
+            }
+            div#wind-icon{
+                grid-column: 3 ;
+                grid-row: 1 / span 3;
+            }
+        </style>
+        <div class="grid-container">
+            <div id='icon' class="item1">#icn</div>
+            <div id='temp' class="item2">#tmp</div>
+            <div id='wetter-text' class="item2">#txt</div>
+            <div id='wind' class="item2">#wnd</div>
+            <div id='wind-icon'>
+                <canvas id="canvasWind" width="90" height="90"
+                style="background-color:#FFF">
+                </canvas>
+            </div>
+            
+      </div>
+<script>
+(function loadXMLDoc() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const wetter = JSON.parse(this.responseText);
+            document.getElementById("icon").innerHTML = "<img src='http://openweathermap.org/img/wn/"+wetter.current.weather[0].icon+"@2x.png'>";
+            // "Das Wetter für "+wetter.name+" Temp: "+formatTempOutput(wetter.main.temp)+" (gefühlt wie " + formatTempOutput(wetter.main.feels_like) + ") <img src='http://openweathermap.org/img/wn/"+wetter.weather[0].icon+".png'>" + wetter.weather[0].description ;
+            document.getElementById("temp").innerHTML = "<b>"+formatTempOutput(wetter.current.temp) +"</b> (gefühlt " + formatTempOutput(wetter.current.feels_like) + ")"; 
+            document.getElementById("wetter-text").innerHTML = "<b>"+wetter.current.weather[0].description + "</b> - Sonnenaufgang " + formatTime(wetter.current.sunrise) + " Sonnenuntergang " + formatTime(wetter.current.sunset) ;
+            document.getElementById("wind").innerHTML = "Windstärke: <b>"+ wetter.current.wind_speed + "m/s</b> ";
+            windRichtung("canvasWind", wetter.current.wind_deg);
+        }
+    };
+    xhttp.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat=48.858&lon=11.237&appid=950fb8be66fdae5f7c9eb58cba59d8b8&units=metric&lang=de", true);
+    xhttp.send();
+    function formatTempOutput(temp) {
+        return temp.toString().split(".")[0] + "°C";
+    }
+
+    function formatTime(timestamp){  
+        let date = new Date(timestamp * 1000);
+        let hours = date.getHours();
+        let minutes = "0" + date.getMinutes();
+        let seconds = "0" + date.getSeconds();
+      
+        return hours + ':' + minutes.substr(-2) + " Uhr"; 
+    }
+
+    function windRichtung(canvasId, angle) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext("2d");
+        const padding = 0.75;
+        const rotationAngle = (180+angle)*Math.PI/180; // Berechung des Winkels (invertiert auf Grund der Pfeilausrichtung) und Konvertierung in RAD
+        const radius = 0.95 * canvas.width/2 ;
+        const directions = Array("N","NO","O","SO","S","SW","W","NW");
+        
+        ctx.clearRect(0, 0,canvas.width, canvas.height);
+       
+        ctx.font = radius*0.20 + "px 'calibri'";
+        ctx.textBaseline="middle"
+        ctx.textAlign="center";
+        ctx.translate(canvas.width/2, canvas.height/2);
+        directions.forEach((current, num, arr)=>{
+            let ang = num * Math.PI / 4;
+            ctx.rotate(ang);
+            ctx.translate(0, -radius*0.95);
+            ctx.rotate(-ang);
+            ctx.fillText(current, 0, 0);
+            ctx.rotate(ang);
+            ctx.translate(0, radius*0.95);
+            ctx.rotate(-ang);
+            });
+        ctx.translate(-canvas.width/2, -canvas.height/2);   
+        //Windrichtung
+
+        //rotation
+        ctx.translate(canvas.width/2,canvas.height/2);
+        ctx.rotate(rotationAngle);
+        ctx.translate(-canvas.width/2,-canvas.height/2);
+
+        ctx.moveTo(canvas.width/2 + canvas.width/6, canvas.height* padding);
+        ctx.lineTo(canvas.width/2, canvas.height*(1-padding));
+        ctx.lineTo(canvas.width/2 - canvas.width/6, canvas.height*padding);
+        ctx.lineTo(canvas.width/2,canvas.height*(padding-0.15));
+        ctx.closePath();
+
+        //stroke
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#111111';
+        ctx.stroke();
+
+        // the fill color
+        ctx.fillStyle = "#336699";
+        ctx.fill();
+        ctx.rotate(-rotationAngle);
+    }
+
+})();
+</script>

@@ -1,0 +1,228 @@
+<html charset='UTF-8'>
+    <head>
+        <title>canvas</title>
+        <style>
+            canvas {
+                background-color: rgb(255, 255, 255);
+            }
+        </style>
+        <script>
+            const windBedingungen = [
+            {
+                speedVon: 0,
+                speedBis: 0.3,
+                description: "Windstille",
+                color_1: "green",
+                color_2: "lime"
+            },
+            {
+                speedVon: 0.3,
+                speedBis: 1.6,
+                description: "leiser Zug",
+                color_1: "green",
+                color_2: "lime" 
+            },
+            {
+                speedVon: 1.6,
+                speedBis: 3.4,
+                description: "leichte Brise",
+                color_1: "green",
+                color_2: "lime"  
+            },
+            {
+                speedVon: 3.4,
+                speedBis: 5.5,
+                description: "schwachte Brise",
+                color_1: "green",
+                color_2: "lime"  
+            },
+            {
+                speedVon: 5.5,
+                speedBis: 8.0,
+                description: "mäßige Brise",
+                color_1: "green",
+                color_2: "lime"  
+            },
+            {
+                speedVon: 8.0,
+                speedBis: 10.8,
+                description: "frische Brise",
+                color_1: "yellow",
+                color_2: "orange"  
+            },
+            {
+                speedVon: 10.8,
+                speedBis: 13.9,
+                description: "starker Wind",
+                color_1: "yellow",
+                color_2: "orange" 
+            },
+            {
+                speedVon: 13.9,
+                speedBis: 17.2,
+                description: "steifer Wind",
+                color_1: "yellow",
+                color_2: "orange" 
+            },
+            {
+                speedVon: 17.2,
+                speedBis: 20.8,
+                description: "stürmischer Wind",
+                color_1: "orange",
+                color_2: "OrangeRed" 
+            },
+            {
+                speedVon: 20.8,
+                speedBis: 24.5,
+                description: "Sturm",
+                color_1: "orange",
+                color_2: "OrangeRed"  
+            },
+            {
+                speedVon: 24.5,
+                speedBis: 28.5,
+                description: "schwerer Sturm",
+                color_1: "red",
+                color_2: "DarkRed"  
+            },
+            {
+                speedVon: 28.5,
+                speedBis: 32.7,
+                description: "orkanartiger Sturm",
+                color_1: "red",
+                color_2: "DarkRed" 
+            },
+            {
+                speedVon: 32.7,
+                speedBis: 1000000,
+                description: "Orkan",
+                color_1: "Purple",
+                color_2: "Pink" 
+            },
+
+        ];
+            
+            function matchWindBedingungen(speed) {
+            let hit 
+            windBedingungen.forEach((current, index, arr)=>{
+                
+                if(speed>= current.speedVon && speed < current.speedBis) {
+                    
+                    hit = {
+                        speed,
+                        ...current
+                    };
+                }
+                
+            });
+
+            return hit;
+            }
+
+
+            function penis(params) {
+                const canvasId = params.cid;
+                const angle = params.deg;
+                const speed = params.speed;
+                const wind = matchWindBedingungen(speed);
+                
+                if(!canvasId || !angle) {
+                    console.log("Canvas ID oder Angle nicht definiet!");
+                    return false;
+                }
+                let canvas = document.getElementById(canvasId);
+            
+                if(!canvas) {
+                    console.log("Error: Canvas not found!");
+                    return false;
+                }
+                try {
+                    let ctx = canvas.getContext("2d");
+                    const padding = 0.75;
+                    const rotationAngle = (180+angle)*Math.PI/180; // Berechung des Winkels (invertiert auf Grund der Pfeilausrichtung) und Konvertierung in RAD
+                    const radius = 0.99 * canvas.width/2 ;
+                    const directions = Array("N","NO","O","SO","S","SW","W","NW");
+                    
+                    // Kreishintergrund
+                    ctx.beginPath();
+                    ctx.fillStyle = '#FFF';
+                    ctx.strokeStyle = '#EFEFEF';
+                    ctx.arc(canvas.width/2, canvas.height/2, radius*0.75 , 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    //Himmelsrichtungen schreiben
+                    
+                    ctx.strokeStyle = '';
+                   
+                    ctx.textBaseline="middle"
+                    ctx.textAlign="center";
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    directions.forEach((current, num, arr)=>{
+                        let ang = num * Math.PI / 4;
+                        ctx.rotate(ang);
+                        // pfeil in richtung
+                        ctx.beginPath();
+                        ctx.fillStyle = '#EFEFEF';
+                        ctx.moveTo(canvas.width/12 , 0);
+                        ctx.lineTo(0, ( (num+1)%2? -canvas.height/2*padding:-canvas.height*(1-padding) ));
+                        ctx.lineTo(-canvas.width/12 , 0);
+                        ctx.closePath();
+                        ctx.fill();
+
+                       debugger
+                        //schreiben
+                        ctx.translate(0, -radius*0.9);
+                        ctx.rotate(-ang);
+                        ctx.fillStyle = '#333';
+                        ctx.font = ((num+1)%2?"bold italic":" italic")+" "+radius*0.20 + "px 'calibri'";
+                        ctx.fillText(current, 0, 0);
+                        ctx.rotate(ang);
+                        ctx.translate(0, radius*0.9);
+                        ctx.rotate(-ang);
+                        });
+                    ctx.translate(-canvas.width/2, -canvas.height/2);
+                    
+
+
+
+                    
+                    //Windrichtung
+                    //rotation
+                    ctx.translate(canvas.width/2,canvas.height/2);
+                    ctx.rotate(rotationAngle);
+                    ctx.translate(-canvas.width/2,-canvas.height/2);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(canvas.width/2 + canvas.width/6, canvas.height* padding);
+                    ctx.lineTo(canvas.width/2, canvas.height*(1-padding));
+                    ctx.lineTo(canvas.width/2 - canvas.width/6, canvas.height*padding);
+                    ctx.lineTo(canvas.width/2,canvas.height*(padding-0.15));
+                    ctx.closePath();
+
+                    //stroke
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#111111';
+                    ctx.stroke();
+
+                    // // the fill color
+                    let grd = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    grd.addColorStop(0, wind.color_1);
+                    grd.addColorStop(1, wind.color_2);
+
+                    ctx.fillStyle = grd;
+                    ctx.fill();
+                
+                    ctx.rotate(-rotationAngle);
+
+                } catch (e) {
+                    console.log(JSON.stringify(e));
+                }
+            }
+        </script>
+    </head>
+    <body onload='penis({"cid": "canvas", "deg": 260, "speed": 25.0 })'>
+        <div><canvas id="canvas" width="150" height="150"></cavas></div>
+    </body>
+</html

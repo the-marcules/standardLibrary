@@ -1,0 +1,32 @@
+<div style="position: static; width: 100%; min-height: 300px">
+	<div style="font-family: 'Times new Roman', Times, Serif; font-size: 10em; color: #efefef; position: absolute; right: 10px; bottom: -60px; z-index:0" id="miracleDiv">"</div>
+	<p id="mmText" style="position: relative; z-index: 1">...</p>
+</div>
+<script>
+(function miracleMoron() {
+const mmstr = [
+			"Live for nothing, or die for something",
+			"It ain't about how hard you hit. It's about how hard you can get hit and keep moving forward.",
+			"Get to the chopper",
+			"If it bleeds, we can kill it!",
+			"What is it? <br>Blue light. <br>What does it do? <br>It turns blue.",
+			"Real heroes don't die, they just reload.",
+			"Well, surrounding them's out of the question...",
+			"You are not hunting him, he is hunting you!",
+			"Are you bringing any guns? <br>Of course not. <br>Then you are not changing anything."
+			];
+const mmQuoter = [
+			"John Rambo",
+			"Rocky Balboa",
+			"Dutch",
+			"Dutch",
+			"John Rambo",
+			"John Rambo",
+			"John Rambo",
+			"Col. Trautman",
+			"John Rambo"
+			];
+let randNum = Math.floor((Math.random() * mmstr.length))
+document.getElementById("mmText").innerHTML = " <p style='font-style: italic; padding-left:15px; font-size: 1.5em; font-weight: 100'>" +mmstr[randNum] +"</p><p style='font-style: italic; padding-right:60px; font-size: .9em; font-weight: 100; text-align: right'>- " +mmQuoter[randNum] +"</p>";
+})();
+</script>

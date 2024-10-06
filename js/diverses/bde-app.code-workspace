@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "nodeJWT"
+		},
+		{
+			"path": "frontend-route"
+		},
+		{
+			"path": "nodeWebsocket\\socketJWT"
+		}
+	],
+	"settings": {}
+}

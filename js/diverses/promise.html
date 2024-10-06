@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>JS Promises</title>
+        <link rel="stylesheet" href="style.css">
+
+        <script src="classLogger.js"></script>
+       
+        <script>
+            const logger = new journal('Promises');
+
+            new Promise((resolve, reject) => {
+                logger.info('Initial');
+                document.onreadystatechange = () => {
+
+                    function check() {
+                        logger.info("ReadyState Change: ", { "state": document.readyState });
+                        if(document.readyState !== 'loading') resolve("fired at " + document.readyState);
+                    }
+                    
+                    document.onreadystatechange = check;
+                };
+            })
+            .then((result) => { // @params: opt. Parameters from Promise resolve() 
+                logger.info('finished with result: ' + result, {result});
+                alldone();
+            })
+            .catch((e) => {
+                logger.error(e);
+            })
+            .then(()=>{
+                logger.info("Will be done what ever happens, because its chained after the 1st then and a catch.");
+
+            });
+            logger.info("text without any Promise relation");
+            
+            function alldone(){ //INFO: will be called when DOM is ready to be manipulated
+                document.getElementById("ergebnis").innerHTML = "Promise <span class='text_highlight_2'>resolved.</span>";
+            }
+        </script>
+    </head>
+    <body class="background_1">
+        <div id="flexbox">
+            </div><div id="header"> <!-- HEADER -->
+                <p>HEADER: Title of this beautiful page!</p>
+            </div>
+            <div id="content"> <!-- CONTENT -->
+                <div class="main">
+                    <h1 class="gradient_2">understanding Promises.... <span class="text_highlight_1">at least trying to.... ;)</span></h1>
+                    <div id="ergebnis">nothing so far.</div>
+                </div>
+                <aside class="sidebar">Side bar</aside>
+            </div>
+            <div id="footer">Footer</div> <!-- FOOTER -->
+        </div>
+    </body>
+</html>

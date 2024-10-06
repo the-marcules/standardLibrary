@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>WETTER GRAPH API</title>
+		<meta charset="utf-8">
+		<style>
+			img {
+				pointer-events: none;
+			}
+		</style>
+		<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
+		<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+		<script src="classes.js"></script>
+		<script src="../classLogger.js"></script>
+		<script>
+			const logger = new journal('weather_graph');
+
+			window.onload = function () {
+				document.getElementById("chartContainer").innerHTML = "Loading...";
+				const wetter = new WeatherApiCall(
+                'https://api.openweathermap.org/data/2.5/onecall',
+                [
+                    {name: "lat", value:"49.770"},
+                    {name: "lon", value:"11.408"},
+                    {name: "appid", value:"950fb8be66fdae5f7c9eb58cba59d8b8"},
+                    {name: "units", value:"metric"},
+                    {name: "lang", value:"de"}
+				]);
+				
+				(async () => {
+					let wetterDaten = await wetter.get();
+					wetterDaten = JSON.parse(wetterDaten);
+					let data= {}; // obj für chartDaten
+					data.rain = [];
+					data.temp = [];
+					data.wind = [];
+					let images=[]; //images für wetter 
+												
+					wetterDaten['daily'].forEach((item,i,array)=>{
+						data.temp.push({ label: day(item.dt), y: [item.temp.min, item.temp.day], name: item.weather[0].description })
+						data.rain.push({ label: day(item.dt), y: (item.rain?item.rain:0) , name: "Regen" })
+						data.wind.push({ label: day(item.dt), y: item.wind_speed, "deg": item.wind_deg});
+						images.push($("<img>").attr("src", "http://openweathermap.org/img/wn/"+item.weather[0].icon+"@2x.png"));
+					});
+
+					drawMyChart(data,images);
+
+					function day(timeStamp){
+						const weekday = Array("Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag");  
+						const date = new Date(timeStamp * 1000);
+						let dayOfWeek = date.getDay();
+						
+						return weekday[dayOfWeek]; 
+					}
+
+				})();
+			}
+
+
+			function drawMyChart(data, weatherImages) {
+				var chart = new CanvasJS.Chart("chartContainer", {            
+					title:{
+						text: "Wetter-Vorhersage"              
+					},
+					legend: {
+						cursor:"pointer",
+						verticalAlign: "top",
+						fontSize:14,
+						fontColor: "#efefef",
+						itemclick : toggleDataSeries
+					},
+					theme: "dark1",
+					axisY: {
+						title: "Temperatur [°C]",
+						labelFontColor: "orange",
+						titleFontColor: "orange",
+						lineColor: "orange",
+						tickColor: "orange",
+						suffix: "",
+						maximum: 40,
+						gridThickness: 1
+					},
+					axisY2: [{
+						title: "Niederschlag [mm/m²]",
+						labelFontColor: "#065edb",
+						titleFontColor: "#065edb",
+						lineColor: "#065edb",
+						tickColor: "#065edb",
+						suffix: "",
+						maximum: 100,
+						gridThickness: 0
+					},
+					{
+						title: "Wind [m/s]",
+						suffix: "",
+						includeZero: true,
+						labelFontColor: "#863623",
+						titleFontColor: "#863623",
+						lineColor: "#863623",
+						tickColor: "#863623",
+						maximum: 20,
+						gridThickness: 0
+					}],
+					toolTip:{
+						shared: true,
+						contentFormatter: function(e) {
+							let str = "";
+							for (var i = 0; i < e.entries.length; i++){
+								let temp = "";
+								if(e.entries[i].dataSeries.name == "Temperatur")
+									temp= e.entries[i].dataPoint.name + " <br>" + e.entries[i].dataSeries.name + ": <br>Max " + e.entries[i].dataPoint.y[1] + " °C, Min: "+ e.entries[i].dataPoint.y[0] + " °C<br>" + e.entries[i].dataPoint.name;
+								else if(e.entries[i].dataSeries.name == "Regen") 
+									temp = (" <br>Niederschlagsmenge: " + e.entries[i].dataPoint.y + " mm/m²<br>");
+								else
+									temp = ("Wind <br>Geschwindigkeit: " + e.entries[i].dataPoint.y + " m/s ("+e.entries[i].dataPoint.deg+"°)<br>");
+								str = str.concat(temp);
+							};
+							return (str);	
+						}
+						//content: "{name} Regen: {y[3]} mm/²m</br> <strong>Temperature: </strong> </br> Min: {y[0]} °C, Max: {y[1]} °C"
+					},
+					data: [{
+						type: "rangeSplineArea",
+						fillOpacity: 0.1,
+						color: "orange",
+						showInLegend: true,
+						name:"Temperatur",
+						indexLabelFormatter: formatter,
+						//yValueFormatString: "#. °C",
+						dataPoints: [
+							...data.temp
+						]
+					},
+					{
+						type: "spline",
+						color: "#065edb",
+						axisYType: "secondary",
+						name: "Regen",
+						showInLegend: true,
+						
+						dataPoints: [
+							...data.rain
+						]
+					},
+					{
+						type: "spline",
+						color: "#863623",
+						axisYType: "secondary",
+						name: "Wind",
+						showInLegend: true,
+						dataPoints: [
+							...data.wind
+						]
+					}]
+				});
+				chart.render();
+
+				var images = weatherImages;    
+
+				addImages(chart);
+
+				function addImages(chart) {
+					for(var i = 0; i < chart.data[0].dataPoints.length; i++){
+						var dpsName = chart.data[0].dataPoints[i].name;
+						images[i].attr({"class": ".chartImage", "id": "weatherIcon_"+i}).appendTo($("#chartContainer>.canvasjs-chart-container"));
+						positionImage(images[i], i);
+					}
+				}
+
+				function positionImage(image, index) {
+					var imageCenter = chart.axisX[0].convertValueToPixel(chart.data[0].dataPoints[index].x);
+					var imageTop =  chart.axisY[0].convertValueToPixel(chart.axisY[0].maximum);
+
+					image.width("40px")
+					.css({ "left": imageCenter - 20 + "px",
+					"position": "absolute","top":imageTop + "px",
+					"position": "absolute"});
+				}
+
+				$( window ).resize(function() {
+					for(var i=0;i<chart.data[0].dataPoints.length;i++) {
+						imageCenter = chart.axisX[0].convertValueToPixel(chart.data[0].dataPoints[i].x) - 20;
+						document.getElementById("weatherIcon_"+i).style.left = imageCenter+"px";
+					}
+				});
+
+				function formatter(e) { 
+					if(e.index === 0 && e.dataPoint.x === 0) {
+						return " Min " + Math.round(e.dataPoint.y[e.index]) + "°";
+					} else if(e.index == 1 && e.dataPoint.x === 0) {
+						return " Max " + Math.round(e.dataPoint.y[e.index]) + "°";
+					} else{
+						return Math.round(e.dataPoint.y[e.index]) + "°";
+					}
+				}
+				function toggleDataSeries(e) {
+					if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+						e.dataSeries.visible = false;
+					}
+					else {
+						e.dataSeries.visible = true;
+					}
+					chart.render();
+				}
+
+			}
+		</script>	
+	</head>
+	<body>
+		<div id="chartContainer" style="height: 300px; width: 100%; position: relative;"></div>
+	</body>
+</html>

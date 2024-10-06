@@ -1,0 +1,380 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style rel="css/stylesheet">
+            canvas{
+                 background-color:inherit;
+            }      
+            div.grid-container {
+            display: grid;
+            grid-gap: 0px;
+            background-color: #FFF;
+            padding: 2px;
+            }
+            div#icon{
+                grid-column: 1;
+                grid-row: 1 / span 3;
+            }
+            div#wetter-text {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            div#temp {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            div#wind{
+                grid-column: 2;
+                grid-row: 3;
+            }
+            div#wind-icon{
+                grid-column: 3 ;
+                grid-row: 1 / span 3;
+            }
+            div#forecast{
+                background-color:rgb(142, 193, 209);
+                grid-gap: 2px;
+                overflow-x:hidden;
+                overflow-y:hidden;
+            }
+           
+
+            div.column_1{
+                grid-column: 1;
+            }
+            div.column_2{
+                grid-column: 2;
+            }
+            div.column_3{
+                grid-column: 3;
+            }
+            div.column_4{
+                grid-column: 4;
+            }
+            div.column_5{
+                grid-column: 5;
+            }
+            div.column_6{
+                grid-column: 6;
+            }
+            div.column_7{
+                grid-column: 7;
+            }
+            div.column_8{
+                grid-column: 8;
+            }
+            div.grid-item {
+                background-color: rgb(187, 233, 247);
+                text-align: center;
+            }
+            div.grid-item > div{
+                margin: 5px;
+                width: auto;
+            }
+
+        </style>
+
+        <script>
+        
+
+            (function loadXMLDoc() {
+                let xhttp = new XMLHttpRequest();
+                let myCanvases = Array();
+                const windBedingungen = [
+                        {
+                            speedVon: 0,
+                            speedBis: 0.3,
+                            description: "Windstille",
+                            color_1: "green",
+                            color_2: "lime"
+                        },
+                        {
+                            speedVon: 0.3,
+                            speedBis: 1.6,
+                            description: "leiser Zug",
+                            color_1: "green",
+                            color_2: "lime" 
+                        },
+                        {
+                            speedVon: 1.6,
+                            speedBis: 3.4,
+                            description: "leichte Brise",
+                            color_1: "green",
+                            color_2: "lime"  
+                        },
+                        {
+                            speedVon: 3.4,
+                            speedBis: 5.5,
+                            description: "schwache Brise",
+                            color_1: "green",
+                            color_2: "lime"  
+                        },
+                        {
+                            speedVon: 5.5,
+                            speedBis: 8.0,
+                            description: "mäßige Brise",
+                            color_1: "green",
+                            color_2: "lime"  
+                        },
+                        {
+                            speedVon: 8.0,
+                            speedBis: 10.8,
+                            description: "frische Brise",
+                            color_1: "yellow",
+                            color_2: "orange"  
+                        },
+                        {
+                            speedVon: 10.8,
+                            speedBis: 13.9,
+                            description: "starker Wind",
+                            color_1: "yellow",
+                            color_2: "orange" 
+                        },
+                        {
+                            speedVon: 13.9,
+                            speedBis: 17.2,
+                            description: "steifer Wind",
+                            color_1: "yellow",
+                            color_2: "orange" 
+                        },
+                        {
+                            speedVon: 17.2,
+                            speedBis: 20.8,
+                            description: "stürmischer Wind",
+                            color_1: "orange",
+                            color_2: "OrangeRed" 
+                        },
+                        {
+                            speedVon: 20.8,
+                            speedBis: 24.5,
+                            description: "Sturm",
+                            color_1: "orange",
+                            color_2: "OrangeRed"  
+                        },
+                        {
+                            speedVon: 24.5,
+                            speedBis: 28.5,
+                            description: "schwerer Sturm",
+                            color_1: "red",
+                            color_2: "DarkRed"  
+                        },
+                        {
+                            speedVon: 28.5,
+                            speedBis: 32.7,
+                            description: "orkanartiger Sturm",
+                            color_1: "red",
+                            color_2: "DarkRed" 
+                        },
+                        {
+                            speedVon: 32.7,
+                            speedBis: 1000000,
+                            description: "Orkan",
+                            color_1: "Purple",
+                            color_2: "Pink" 
+                        },
+
+                    ];
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const wetter = JSON.parse(this.responseText);
+                        document.getElementById("icon").innerHTML = "<img src='http://openweathermap.org/img/wn/"+wetter.current.weather[0].icon+"@2x.png'>";
+                    
+                        document.getElementById("temp").innerHTML = "<b>"+formatTempOutput(wetter.current.temp) +"</b> (gefühlt " + formatTempOutput(wetter.current.feels_like) + ")"; 
+                        document.getElementById("wetter-text").innerHTML = "<b>"+wetter.current.weather[0].description + "</b> - Sonnenaufgang " + formatTime(wetter.current.sunrise) + " Sonnenuntergang " + formatTime(wetter.current.sunset) ;
+                        
+                        const wind = matchWindBedingungen(wetter.current.wind_speed);
+                        document.getElementById("wind").innerHTML = wind.description+" mit <b>"+ wetter.current.wind_speed + "m/s</b> ";
+                        
+                        windRichtung({...wind,"cid":"canvasWind", "deg":wetter.current.wind_deg}); // Windrose für das aktuelle Wetter 
+                        wetter.daily.forEach(forecast); //Vorhersage für aktuellen Tag bis in 7 Tagen
+                        myCanvases.forEach(windRichtung); // Winrosen für Vorhersage
+                    }
+                };
+                xhttp.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat=49.770&lon=11.408&appid=950fb8be66fdae5f7c9eb58cba59d8b8&units=metric&lang=de", true);
+                xhttp.send();
+
+                function formatTempOutput(temp) {
+                    //console.log("formatTempOutput:"+temp)
+                    return temp.toString().split(".")[0] + "°C";
+                }
+                
+                function forecast(curr, index, arr) {
+                    
+                    let col = index +1 ;
+                    document.getElementById("forecast").innerHTML += "<div id='fc_"+col+"' class='column_"+col+" grid-item'></div>";
+                    document.getElementById("fc_"+col).innerHTML += "<div><b>"+formatDate(curr.dt) +"</b></div>"; //Datum
+                    document.getElementById("fc_"+col).innerHTML += "<div><img src='http://openweathermap.org/img/wn/"+curr.weather[0].icon+"@2x.png'></div>";
+                    document.getElementById("fc_"+col).innerHTML += "<div><b style='font-size: 1.5em; color: #333'>"+formatTempOutput(curr.temp.day) +"</b> / "+formatTempOutput(curr.temp.min) +"</div>";
+                    document.getElementById("fc_"+col).innerHTML += "<div>Gefühlt: "+formatTempOutput(curr.feels_like.day) +"</div>";
+                    document.getElementById("fc_"+col).innerHTML += "<div><b>"+curr.weather[0].description + "</b></div>";
+                    const wind = matchWindBedingungen(curr.wind_speed);
+                    document.getElementById("fc_"+col).innerHTML += "<div>"+wind.description+" mit <b>"+curr.wind_speed + "m/s</b> </div>";
+                    document.getElementById("fc_"+col).innerHTML += "<div id='canvasContainer_"+col+"'><canvas id='canvas_"+col+"' width='80' height='80'></canvas></div>";
+                    myCanvases.push({...wind, "cid":"canvas_"+col, "deg": curr.wind_deg}); // {"cid":"canvas_"+col, "deg": curr.wind_deg, "speed": curr.wind_speed}
+                }
+
+                function formatTime(timestamp){  
+                    const date = new Date(timestamp * 1000);
+                    let hours = date.getHours();
+                    let minutes = "0" + date.getMinutes();
+                    let seconds = "0" + date.getSeconds();
+                    
+                    return hours + ':' + minutes.substr(-2) + " Uhr"; 
+                }
+
+                function matchWindBedingungen(speed) {
+                    let hit 
+                    windBedingungen.forEach((current, index, arr)=>{
+                        
+                        if(speed>= current.speedVon && speed < current.speedBis) {
+                            
+                            hit = {
+                                speed,
+                                ...current
+                            };
+                        }
+                        
+                    });
+
+                    return hit;
+                }
+
+                function formatDate(timestamp){
+                    const weekday = Array("Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag");  
+                    const date = new Date(timestamp * 1000);
+                    let year = date.getFullYear();
+                    let month = date.getMonth()+1;
+                    let day = date.getDate();
+                    let dayOfWeek = date.getDay();
+                    
+                    return weekday[dayOfWeek].slice(0,2) + ", " + day + "." + month + "." + year; 
+                }
+
+
+                function windRichtung(params) {
+                    const canvasId = params.cid;
+                    const angle = params.deg;
+                    const speed = params.speed;
+                    const color_1 = params.color_1;
+                    const color_2 = params.color_2;
+                    const description = params.description;
+
+                    //const wind = matchWindBedingungen(speed);
+                    
+                    if(!canvasId || !angle) return false;
+
+                    let canvas = document.getElementById(canvasId);
+                    
+                    if(!canvas) {
+                        console.log("Error: Canvas not found!");
+                        return false;
+                    }
+                    try {
+                        let ctx = canvas.getContext("2d");
+                                const padding = 0.75;
+                                const rotationAngle = (180+angle)*Math.PI/180; // Berechung des Winkels (invertiert auf Grund der Pfeilausrichtung) und Konvertierung in RAD
+                                const radius = 0.99 * canvas.width/2 ;
+                                const directions = Array("N","NO","O","SO","S","SW","W","NW");
+                                
+                                // Kreishintergrund
+                                ctx.beginPath();
+                                ctx.fillStyle = '#FFF';
+                                ctx.strokeStyle = '#EFEFEF';
+                                ctx.arc(canvas.width/2, canvas.height/2, radius*0.75 , 0, 2 * Math.PI);
+                                ctx.fill();
+                                ctx.stroke();
+                                ctx.closePath();
+
+                                //Himmelsrichtungen schreiben
+                                
+                                ctx.strokeStyle = '';
+                                
+                                ctx.textBaseline="middle"
+                                ctx.textAlign="center";
+                                ctx.translate(canvas.width/2, canvas.height/2);
+                                directions.forEach((current, num, arr)=>{
+                                    let ang = num * Math.PI / 4;
+                                    ctx.rotate(ang);
+                                    // pfeil in richtung
+                                    ctx.beginPath();
+                                    ctx.fillStyle = '#EFEFEF';
+                                    ctx.moveTo(canvas.width/12 , 0);
+                                    ctx.lineTo(0, ( (num+1)%2? -canvas.height/2*padding:-canvas.height*(1-padding) ));
+                                    ctx.lineTo(-canvas.width/12 , 0);
+                                    ctx.closePath();
+                                    ctx.fill();
+
+                                    //schreiben
+                                    ctx.translate(0, -radius*0.9);
+                                    ctx.rotate(-ang);
+                                    ctx.fillStyle = '#333';
+                                    ctx.font = ((num+1)%2?"bold italic":" italic")+" "+radius*0.20 + "px 'calibri'";
+                                    ctx.fillText(current, 0, 0);
+                                    ctx.rotate(ang);
+                                    ctx.translate(0, radius*0.9);
+                                    ctx.rotate(-ang);
+                                    });
+                                ctx.translate(-canvas.width/2, -canvas.height/2);
+                                
+
+
+
+                                
+                                //Windrichtung
+                                //rotation
+                                ctx.translate(canvas.width/2,canvas.height/2);
+                                ctx.rotate(rotationAngle);
+                                ctx.translate(-canvas.width/2,-canvas.height/2);
+                                
+                                ctx.beginPath();
+                                ctx.moveTo(canvas.width/2 + canvas.width/6, canvas.height* padding);
+                                ctx.lineTo(canvas.width/2, canvas.height*(1-padding));
+                                ctx.lineTo(canvas.width/2 - canvas.width/6, canvas.height*padding);
+                                ctx.lineTo(canvas.width/2,canvas.height*(padding-0.15));
+                                ctx.closePath();
+
+                                //stroke
+                                ctx.lineWidth = 2;
+                                ctx.strokeStyle = '#111111';
+                                ctx.stroke();
+
+                                // // the fill color
+                                let grd = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                                grd.addColorStop(0, color_1);
+                                grd.addColorStop(1, color_2);
+
+                                ctx.fillStyle = grd;
+                                ctx.fill();
+                            
+                                ctx.rotate(-rotationAngle);
+
+                    } catch (e) {
+                        console.log(JSON.stringify(e));
+                    }
+                }
+
+            })();
+        </script>
+    </head>
+   
+    <body>
+       
+        <div class="grid-container">
+            <div id='icon' class="item1">#icn</div>
+            <div id='temp' class="item2">#tmp</div>
+            <div id='wetter-text' class="item2">#txt</div>
+            <div id='wind' class="item2">#wnd</div>
+            <div id='wind-icon'>
+                <canvas id="canvasWind" width="90" height="90">
+                </canvas>
+            </div>
+      </div>
+      <div id="forecast" class="grid-container">
+         
+      </div>
+    </body>
+</html>        
+
+       

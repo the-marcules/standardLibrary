@@ -1,0 +1,11 @@
+canvas {
+  border: 5px solid rgb(168, 127, 15);
+  background: rgb(34, 193, 195);
+  background: linear-gradient(0deg, rgb(2, 7, 45) 0%, rgb(22, 0, 69) 100%);
+}
+body {
+  background-color: rgb(255, 255, 255);
+}
+h1 {
+  font-family: "Arcade Interlaced";
+}

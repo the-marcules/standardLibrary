@@ -1,0 +1,42 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script> 
+            
+            window.$ = (function Marcules(name) {
+                let type = name.toString().substr(0,1);
+                switch(type) {
+                    case '#': // ID
+                        let id = name.substr(1, name.length);
+                        let element = document.getElementById(id);
+                        return element;
+                        break;
+                    case '.': // Class
+                        let className = name.substr(1, name.length);
+                        let elements = document.getElementsByClassName(className);
+                        return elements;
+                        break;
+                    default:
+                        return undefined;
+                        break;
+                }
+            
+                
+            });
+    
+  
+        </script>
+    </head>
+   
+    <body onload="javascript:los()">
+       
+     
+      <div id="wetter" class="grid-container"></div>
+      <div id="wetter1" class="grid-container"></div>
+
+    </body>
+   
+</html>        
+
+       
