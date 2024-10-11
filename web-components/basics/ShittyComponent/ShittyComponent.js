@@ -1,5 +1,6 @@
 class ShittyElement extends HTMLElement {
     #ComponentName = 'ShittyComponent'
+
     constructor() {
         super()
         const shadow = this.attachShadow({ mode: 'open' })
