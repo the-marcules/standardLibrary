@@ -20,6 +20,7 @@ func TestWebDav(t *testing.T) {
 		webDavClient := NewWebDavCommunicator(server.URL)
 		defer server.Close()
 		response := webDavClient.GetStat("adam")
+		fmt.Printf("got response %v", response)
 		require.NoError(t, response.Err)
 	})
 
@@ -160,7 +161,7 @@ func TestWebDavResponse_PutFile(t *testing.T) {
 		startTime := time.Now().Unix()
 		fmt.Printf("starttime %d", startTime)
 
-		remoteFileName := "testdata/C8521DB.zip")
+		remoteFileName := "testdata/C8521DB.zip"
 
 		response := webDavClient.PutFile("testdata/C8521DB.zip", remoteFileName)
 		require.NoError(t, response.Err, "got error on putting but should not")

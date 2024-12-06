@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>interpolate-size</title>
+        <link rel="stylesheet" href="style.css" />
+        <script> 
+
+            function show() {
+                document.querySelector('div.popup').classList.add("show")
+            }
+            function hide() {
+                document.querySelector('div.popup').classList.remove("show")
+            }
+
+        </script>
+    </head>
+    <body>
+        <p>
+            <button onclick="show()">show popup</button>
+            <button onclick="hide()">hide popup</button>
+        </p>
+
+            <p class="someClass">some element below <span class="childsClass">jooo</span></p>
+    </body>
+</html>

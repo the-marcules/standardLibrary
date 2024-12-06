@@ -1,0 +1,39 @@
+:root {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* Nov 2024: experimental css feature, works currently in chrome only */
+    interpolate-size: allow-keywords;
+
+}
+html {
+    background-color: #efefef;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    background-color: antiquewhite;
+    margin: 0;
+    padding: 50px;
+    height: 100vh;
+}
+
+p:first-of-type {
+    background-color: purple;
+    padding: 50px;
+    
+    & button{
+        color: red;
+    }
+}
+p {
+   /* &_.someClass for children */
+   & .childsClass  {
+        color: yellow;
+    }
+
+    /* for elemens with that class themselfes */
+    &.someClass{
+        color: rebeccapurple;
+    }
+}

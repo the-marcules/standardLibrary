@@ -1,0 +1,40 @@
+:root {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* Nov 2024: experimental css feature, works currently in chrome only */
+    interpolate-size: allow-keywords;
+
+}
+html {
+    background-color: #efefef;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    box-sizing: border-box;
+    background-color: antiquewhite;
+    margin: 0;
+    padding: 50px;
+    height: 100vh;
+}
+
+.popup {
+    height: 0;
+    width: 250px;
+    background-color: cadetblue;
+    transition: all 400ms ease-out;
+    overflow: clip;
+    padding: 0 12px;
+    box-sizing: border-box;
+    
+    
+    &.show {
+        height: auto !important;
+        padding: 12px;
+
+    }
+}
+
+.popup .show {
+    height: auto;
+}
