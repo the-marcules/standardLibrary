@@ -9,17 +9,16 @@ body {
     /* width: 100vw; */
 }
 .heading {
+    background: linear-gradient(to bottom, #330000, #f30105);
+    background-clip: text;
     font-family: 'Lobster', cursive;
+    color: transparent;
     font-size: 110px;
-    color: white;
     text-align: center;
     margin-top: 200px;
-    filter: drop-shadow(20px 20px 3px #000);
-    text-shadow: 
-        -2px -2px 0 darkred,  
-        2px -2px 0 darkred,
-        -2px 2px 0 darkred,
-        2px 2px 0 darkred;
+    filter: drop-shadow(0px 0px 1px #FFF) drop-shadow(25px 25px 8px #000);
+    z-index: 99;
+    position: relative;
 }
 
 .canvas {
@@ -31,6 +30,42 @@ body {
     background-color: transparent;
     box-sizing: border-box;
     overflow: clip;
+
+    &::before{
+        content: "_";
+        display: block;
+        color:white;
+        position: absolute;
+        bottom:0;
+        left:0;
+       background: linear-gradient(to right, #ffffff, #bebebe);
+        width: 100%;
+        height: 0%;
+        animation: growingSnow 60s 7s linear;
+        animation-fill-mode: forwards;
+        clip-path:  polygon(0% 0%, 25% 25%, 50% 0%, 75% 45%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+        &::after{
+        content: "_";
+        display: block;
+        color:white;
+        position: absolute;
+        bottom:0;
+        left:0;
+       background: linear-gradient(to right, #ffffff, #bebebe);
+        width: 50%;
+        height: 0;
+        animation: growingSnow 45s 8s linear;
+        animation-fill-mode: forwards;
+        clip-path:  polygon(0% 0%, 25% 25%, 50% 0%, 75% 25%,  100% 100%, 0% 100%);
+    }
+}
+
+@keyframes growingSnow {
+    to {
+        height: 150px;
+    }
 }
 
 .snowflake {
@@ -44,25 +79,29 @@ body {
 .snowflake:nth-child(1) {
     --left-init: 10;
     --left-end: 50vw;
-    left: -10px;
+    --rotation: 360deg;
+    left: 12%;
     animation: letItSnow 12s 5s linear infinite;
 }
 .snowflake:nth-child(2) {
     --left-init: 20vw;
     --left-end: 10vw;
-    left: 2%;
+    --rotation: -360deg;
+    left: 8%;
     animation: letItSnow 11s 3s linear infinite;
 }
 .snowflake:nth-child(3) {
     --left-init: 30vw;
     --left-end: 60vw;
-    left: 4%;
+    --rotation: 180deg;
+    left: 15%;
     animation: letItSnow 10s 1s linear infinite;
 }
 .snowflake:nth-child(4) {
     --left-init: 40vw;
     --left-end: 70vw;
-    left: 6%;
+    --rotation: -180deg;
+    left: 20%;
     animation: letItSnow 13s 4s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -70,13 +109,15 @@ body {
 .snowflake:nth-child(5) {
     --left-init: 50vw;
     --left-end: 20vw;
-    left: 8%;
+    --rotation: 360deg;
+    left: 25%;
     animation: letItSnow 14s 2s linear infinite;
 }
 .snowflake:nth-child(6) {
     --left-init: 60vw;
     --left-end: 90vw;
-    left: 10%;
+    --rotation: -360deg;
+    left: 30%;
     animation: letItSnow 12s 0s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -84,13 +125,15 @@ body {
 .snowflake:nth-child(7) {
     --left-init: 70vw;
     --left-end: 40vw;
-    left: 12%;
+    --rotation: 180deg;
+    left: 35%;
     animation: letItSnow 11s 5s linear infinite;
 }
 .snowflake:nth-child(8) {
     --left-init: 80vw;
     --left-end: 110vw;
-    left: 14%;
+    --rotation: -180deg;
+    left: 40%;
     animation: letItSnow 10s 3s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -98,19 +141,22 @@ body {
 .snowflake:nth-child(9) {
     --left-init: 90vw;
     --left-end: 60vw;
-    left: 16%;
+    --rotation: 360deg;
+    left: 45%;
     animation: letItSnow 13s 1s linear infinite;
 }
 .snowflake:nth-child(10) {
     --left-init: 100vw;
     --left-end: 110vw;
-    left: 18%;
+    --rotation: -360deg;
+    left: 50%;
     animation: letItSnow 14s 4s linear infinite;
 }
 .snowflake:nth-child(11) {
     --left-init: 90vw;
     --left-end: 80vw;
-    left: 20%;
+    --rotation: 180deg;
+    left: 55%;
     animation: letItSnow 12s 2s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -118,7 +164,8 @@ body {
 .snowflake:nth-child(12) {
     --left-init: 80vw;
     --left-end: 70vw;
-    left: 22%;
+    --rotation: -180deg;
+    left: 60%;
     animation: letItSnow 11s 0s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -126,13 +173,15 @@ body {
 .snowflake:nth-child(13) {
     --left-init: 70vw;
     --left-end: 60vw;
-    left: 24%;
+    --rotation: 360deg;
+    left: 65%;
     animation: letItSnow 10s 5s linear infinite;
 }
 .snowflake:nth-child(14) {
     --left-init: 60vw;
     --left-end: 50vw;
-    left: 26%;
+    --rotation: -360deg;
+    left: 70%;
     animation: letItSnow 13s 3s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -140,19 +189,22 @@ body {
 .snowflake:nth-child(15) {
     --left-init: 50vw;
     --left-end: 40vw;
-    left: 28%;
+    --rotation: 180deg;
+    left: 75%;
     animation: letItSnow 14s 1s linear infinite;
 }
 .snowflake:nth-child(16) {
     --left-init: 40vw;
     --left-end: 30vw;
-    left: 30%;
+    --rotation: -180deg;
+    left: 80%;
     animation: letItSnow 12s 4s linear infinite;
 }
 .snowflake:nth-child(17) {
     --left-init: 30vw;
     --left-end: 20vw;
-    left: 32%;
+    --rotation: 360deg;
+    left: 5%;
     animation: letItSnow 11s 2s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -160,7 +212,8 @@ body {
 .snowflake:nth-child(18) {
     --left-init: 20vw;
     --left-end: 10vw;
-    left: 34%;
+    --rotation: -360deg;
+    left: 10%;
     animation: letItSnow 10s 0s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -168,19 +221,22 @@ body {
 .snowflake:nth-child(19) {
     --left-init: 10vw;
     --left-end: 0vw;
-    left: 36%;
+    --rotation: 180deg;
+    left: 15%;
     animation: letItSnow 13s 5s linear infinite;
 }
 .snowflake:nth-child(20) {
     --left-init: 0vw;
     --left-end: 10vw;
-    left: 38%;
+    --rotation: -180deg;
+    left: 20%;
     animation: letItSnow 14s 3s linear infinite;
 }
 .snowflake:nth-child(21) {
     --left-init: 10vw;
     --left-end: 20vw;
-    left: 40%;
+    --rotation: 360deg;
+    left: 25%;
     animation: letItSnow 12s 1s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -188,7 +244,8 @@ body {
 .snowflake:nth-child(22) {
     --left-init: 20vw;
     --left-end: 30vw;
-    left: 42%;
+    --rotation: -360deg;
+    left: 30%;
     animation: letItSnow 11s 4s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -196,13 +253,15 @@ body {
 .snowflake:nth-child(23) {
     --left-init: 30vw;
     --left-end: 40vw;
-    left: 44%;
+    --rotation: 180deg;
+    left: 35%;
     animation: letItSnow 10s 2s linear infinite;
 }
 .snowflake:nth-child(24) {
     --left-init: 40vw;
     --left-end: 50vw;
-    left: 46%;
+    --rotation: -180deg;
+    left: 40%;
     animation: letItSnow 13s 0s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -210,12 +269,14 @@ body {
 .snowflake:nth-child(25) {
     --left-init: 50vw;
     --left-end: 60vw;
-    left: 48%;
+    --rotation: 360deg;
+    left: 45%;
     animation: letItSnow 14s 5s linear infinite;
 }
 .snowflake:nth-child(26) {
     --left-init: 60vw;
     --left-end: 70vw;
+    --rotation: -360deg;
     left: 50%;
     animation: letItSnow 12s 3s linear infinite;
     filter: blur(2px);
@@ -224,13 +285,15 @@ body {
 .snowflake:nth-child(27) {
     --left-init: 70vw;
     --left-end: 80vw;
-    left: 52%;
+    --rotation: 180deg;
+    left: 55%;
     animation: letItSnow 11s 1s linear infinite;
 }
 .snowflake:nth-child(28) {
     --left-init: 80vw;
     --left-end: 90vw;
-    left: 54%;
+    --rotation: -180deg;
+    left: 60%;
     animation: letItSnow 10s 4s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -238,19 +301,22 @@ body {
 .snowflake:nth-child(29) {
     --left-init: 90vw;
     --left-end: 100vw;
-    left: 56%;
+    --rotation: 360deg;
+    left: 65%;
     animation: letItSnow 13s 2s linear infinite;
 }
 .snowflake:nth-child(30) {
     --left-init: 100vw;
     --left-end: 110vw;
-    left: 58%;
+    --rotation: -360deg;
+    left: 70%;
     animation: letItSnow 14s 0s linear infinite;
 }
 .snowflake:nth-child(31) {
     --left-init: 10vw;
     --left-end: 20vw;
-    left: 60%;
+    --rotation: 180deg;
+    left: 75%;
     animation: letItSnow 12s 5s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -258,19 +324,22 @@ body {
 .snowflake:nth-child(32) {
     --left-init: 20vw;
     --left-end: 30vw;
-    left: 62%;
+    --rotation: -180deg;
+    left: 80%;
     animation: letItSnow 11s 3s linear infinite;
 }
 .snowflake:nth-child(33) {
     --left-init: 30vw;
     --left-end: 40vw;
-    left: 64%;
+    --rotation: 360deg;
+    left: 5%;
     animation: letItSnow 10s 1s linear infinite;
 }
 .snowflake:nth-child(34) {
     --left-init: 40vw;
     --left-end: 50vw;
-    left: 66%;
+    --rotation: -360deg;
+    left: 10%;
     animation: letItSnow 13s 4s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -278,13 +347,15 @@ body {
 .snowflake:nth-child(35) {
     --left-init: 50vw;
     --left-end: 60vw;
-    left: 68%;
+    --rotation: 180deg;
+    left: 15%;
     animation: letItSnow 14s 2s linear infinite;
 }
 .snowflake:nth-child(36) {
     --left-init: 60vw;
     --left-end: 70vw;
-    left: 70%;
+    --rotation: -180deg;
+    left: 20%;
     animation: letItSnow 12s 0s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -292,13 +363,15 @@ body {
 .snowflake:nth-child(37) {
     --left-init: 70vw;
     --left-end: 80vw;
-    left: 72%;
+    --rotation: 360deg;
+    left: 25%;
     animation: letItSnow 11s 5s linear infinite;
 }
 .snowflake:nth-child(38) {
     --left-init: 80vw;
     --left-end: 90vw;
-    left: 74%;
+    --rotation: -360deg;
+    left: 30%;
     animation: letItSnow 10s 3s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -306,19 +379,22 @@ body {
 .snowflake:nth-child(39) {
     --left-init: 90vw;
     --left-end: 100vw;
-    left: 76%;
+    --rotation: 180deg;
+    left: 35%;
     animation: letItSnow 13s 1s linear infinite;
 }
 .snowflake:nth-child(40) {
     --left-init: 100vw;
     --left-end: 110vw;
-    left: 78%;
+    --rotation: -180deg;
+    left: 40%;
     animation: letItSnow 14s 4s linear infinite;
 }
 .snowflake:nth-child(41) {
     --left-init: 90vw;
     --left-end: 80vw;
-    left: 80%;
+    --rotation: 360deg;
+    left: 45%;
     animation: letItSnow 12s 2s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -326,7 +402,8 @@ body {
 .snowflake:nth-child(42) {
     --left-init: 80vw;
     --left-end: 70vw;
-    left: 82%;
+    --rotation: -360deg;
+    left: 50%;
     animation: letItSnow 11s 0s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -334,13 +411,15 @@ body {
 .snowflake:nth-child(43) {
     --left-init: 70vw;
     --left-end: 60vw;
-    left: 84%;
+    --rotation: 180deg;
+    left: 55%;
     animation: letItSnow 10s 5s linear infinite;
 }
 .snowflake:nth-child(44) {
     --left-init: 60vw;
     --left-end: 50vw;
-    left: 86%;
+    --rotation: -180deg;
+    left: 60%;
     animation: letItSnow 13s 3s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -348,13 +427,15 @@ body {
 .snowflake:nth-child(45) {
     --left-init: 50vw;
     --left-end: 40vw;
-    left: 88%;
+    --rotation: 360deg;
+    left: 65%;
     animation: letItSnow 14s 1s linear infinite;
 }
 .snowflake:nth-child(46) {
     --left-init: 40vw;
     --left-end: 30vw;
-    left: 90%;
+    --rotation: -360deg;
+    left: 70%;
     animation: letItSnow 12s 4s linear infinite;
     filter: blur(2px);
     font-size: 25.5px;
@@ -362,13 +443,15 @@ body {
 .snowflake:nth-child(47) {
     --left-init: 30vw;
     --left-end: 20vw;
-    left: 92%;
+    --rotation: 180deg;
+    left: 75%;
     animation: letItSnow 11s 2s linear infinite;
 }
 .snowflake:nth-child(48) {
     --left-init: 20vw;
     --left-end: 10vw;
-    left: 94%;
+    --rotation: -180deg;
+    left: 80%;
     animation: letItSnow 10s 0s linear infinite;
     filter: blur(1px);
     font-size: 27px;
@@ -376,22 +459,96 @@ body {
 .snowflake:nth-child(49) {
     --left-init: 10vw;
     --left-end: 0vw;
-    left: 96%;
+    --rotation: 360deg;
+    left: 5%;
     animation: letItSnow 13s 5s linear infinite;
 }
 .snowflake:nth-child(50) {
     --left-init: 0vw;
     --left-end: 10vw;
-    left: 98%;
+    --rotation: -360deg;
+    left: 10%;
     animation: letItSnow 14s 3s linear infinite;
 }
 .snowflake:nth-child(51) {
     --left-init: 10vw;
     --left-end: 20vw;
-    left: 100%;
+    --rotation: 180deg;
+    left: 15%;
     animation: letItSnow 12s 1s linear infinite;
     filter: blur(1px);
     font-size: 27px;
+}
+.snowflake:nth-child(52) {
+    --left-init: 20vw;
+    --left-end: 30vw;
+    --rotation: -180deg;
+    left: 20%;
+    animation: letItSnow 11s 4s linear infinite;
+    filter: blur(2px);
+    font-size: 25.5px;
+}
+.snowflake:nth-child(53) {
+    --left-init: 30vw;
+    --left-end: 40vw;
+    --rotation: 360deg;
+    left: 25%;
+    animation: letItSnow 10s 2s linear infinite;
+}
+.snowflake:nth-child(54) {
+    --left-init: 40vw;
+    --left-end: 50vw;
+    --rotation: -360deg;
+    left: 30%;
+    animation: letItSnow 13s 0s linear infinite;
+    filter: blur(1px);
+    font-size: 27px;
+}
+.snowflake:nth-child(55) {
+    --left-init: 50vw;
+    --left-end: 60vw;
+    --rotation: 180deg;
+    left: 35%;
+    animation: letItSnow 14s 5s linear infinite;
+}
+.snowflake:nth-child(56) {
+    --left-init: 60vw;
+    --left-end: 70vw;
+    --rotation: -180deg;
+    left: 40%;
+    animation: letItSnow 12s 3s linear infinite;
+    filter: blur(2px);
+    font-size: 25.5px;
+}
+.snowflake:nth-child(57) {
+    --left-init: 70vw;
+    --left-end: 80vw;
+    --rotation: 360deg;
+    left: 45%;
+    animation: letItSnow 11s 1s linear infinite;
+}
+.snowflake:nth-child(58) {
+    --left-init: 80vw;
+    --left-end: 90vw;
+    --rotation: -360deg;
+    left: 50%;
+    animation: letItSnow 10s 4s linear infinite;
+    filter: blur(1px);
+    font-size: 27px;
+}
+.snowflake:nth-child(59) {
+    --left-init: 90vw;
+    --left-end: 100vw;
+    --rotation: 180deg;
+    left: 55%;
+    animation: letItSnow 13s 2s linear infinite;
+}
+.snowflake:nth-child(60) {
+    --left-init: 100vw;
+    --left-end: 110vw;
+    --rotation: -180deg;
+    left: 60%;
+    animation: letItSnow 14s 0s linear infinite;
 }
 
   @keyframes letItSnow {
@@ -400,6 +557,6 @@ body {
         transform: translate(var(--left-init), -50px) rotate(0deg);
     }
     to {
-        transform: translate(var(--left-end), 110vh) rotate(180deg);
+        transform: translate(var(--left-end), 110vh) rotate(var(--rotation));
     }
 }
