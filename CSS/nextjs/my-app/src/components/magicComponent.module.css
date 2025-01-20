@@ -1,0 +1,6 @@
+.magicComponent {
+    grid-column: var(--grid-content-right-half-width);
+    grid-row: 2;
+    color: red;
+    background-color: var(--foreground);
+}

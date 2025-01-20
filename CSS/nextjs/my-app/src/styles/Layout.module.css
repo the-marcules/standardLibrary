@@ -1,0 +1,48 @@
+.basicLayout {
+    margin: 0 ;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: var(--grid-gap);
+}
+
+.header {
+    display: grid;
+    grid-template-columns: inherit;
+    gap: inherit;
+    grid-column: 1 / -1 ;
+    background-color: var(--foreground);
+    color: var(--background);
+
+    & > :first-child{
+        grid-column: 1/7;
+        background-color: blue;
+    }
+
+    .nestedGridElement {
+        grid-column: 7 / 13;
+        background-color: green;
+        color: var(--background);
+        grid-row: 1;
+    }
+
+}
+
+.content {
+    grid-column: var(--grid-content-width) ;
+    background-color: var(--foreground);
+    color: var(--background);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--default-shadow);
+}
+
+.sideNav {
+    grid-column: var(--grid-content-left-half-width);
+    background-color: var(--foreground);
+    color: var(--background);
+    padding: 16px;
+    text-align: center;
+}
+
+

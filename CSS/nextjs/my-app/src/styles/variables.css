@@ -1,0 +1,53 @@
+:root {
+  /* Colors */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  
+  /* Grid */
+  --grid-gap: var(--spacing-large);
+  --grid-columns: 12;
+
+  --grid-full-start-column: 1;
+  --grid-content-start-column: 2;
+  --grid-content-end-column: -2;
+
+  --grid-full-width: 1 / -1;
+  --grid-content-width: 2 / -2;
+  --grid-content-left-half-width: var(--grid-content-start-column) / calc(var(--grid-columns) / 2 + 1);
+  --grid-content-right-half-width: calc(var(--grid-columns) / 2 + 1) / var(--grid-content-end-column);
+
+
+  /* Spacing */
+  --spacing-xsmall: 4px;
+  --spacing-small: 8px;
+  --spacing-medium: 12px;
+  --spacing-large: 24px;
+  --spacing-xlarge: 32px;
+
+
+  /* Shadow */
+  --default-shadow: 2px 2px 4px rgba(69, 69, 69, 0.7);
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
+
+@media (max-width: 768px) {
+  :root {
+    --grid-columns: 6;
+    --grid-content-width: var(--grid-full-width);
+    --grid-content-start-column: 1;
+    --grid-content-end-column: -1;
+    --grid-gap: var(--spacing-medium);
+  }
+}
