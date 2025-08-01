@@ -62,7 +62,8 @@ body{
     height: 3000px;
     width: 90vw;
     position: relative;
-    border: 1px dashed #efefef;
+    background-color:  #efefef55;
+    padding: 20px;
     margin-bottom: 50px;
 
 }

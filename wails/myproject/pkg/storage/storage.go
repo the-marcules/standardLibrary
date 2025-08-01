@@ -64,7 +64,7 @@ func (s *Storage) Write(input string) string {
 func (s *Storage) Read() string {
 	content, err := os.ReadFile(s.FileName)
 	if err != nil {
-		return "-1"
+		return err.Error()
 	}
 	return string(content)
 }

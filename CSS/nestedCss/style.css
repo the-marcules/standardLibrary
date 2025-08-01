@@ -37,3 +37,9 @@ p {
         color: rebeccapurple;
     }
 }
+
+div.block {
+    background-color: red;
+    display: inline;
+    width: 45%;
+}

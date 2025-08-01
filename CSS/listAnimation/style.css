@@ -1,3 +1,6 @@
+:root {
+    interpolate-size: allow-keywords;
+}
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
@@ -50,58 +53,16 @@ body{
 #list div.fadeOut {
     animation: collapse 500ms linear;
     animation-fill-mode: forwards;
-    transform-origin: top;
 }
 
 @keyframes collapse {
    to {
-    transform: scaleY(0);
-    display: none;
+        height: 0;
+        padding: 0 24px;
+        border: none;
+        opacity: 0;
    }
 }
-
-/* #list .listItem {
-    background: #dddddd;
-    box-sizing: border-box;
-    display: grid;
-    column-gap: 12px;
-    grid-template-columns: min-content auto 24px;
-    grid-template-rows: 24px auto;
-    grid-template-areas:
-            "icon header cta"
-            ". stateText cta";
-
-    width: 100%;
-    color: #333333;
-    border-bottom: 1px solid rgb(50, 50, 50);
-    padding: 16px 24px;
-    overflow: hidden;
-}
-
-#list div.fadeOut {
-    animation: animationFadeOut;
-    animation-duration: 800ms;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-
-    
-}
-
-@keyframes animationFadeOut{
-    0%{
-        opacity: 1;
-    }
-  
-    100% {
-        transform: scaleY(0) translateY(1);
-        border-width: 0px;
-        padding: 0px 24px;
-        height: 0px;
-        opacity: 0;
-
-    }
-}
-*/
 
 
 .icon {

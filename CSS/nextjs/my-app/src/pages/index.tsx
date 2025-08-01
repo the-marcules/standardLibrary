@@ -1,18 +1,15 @@
-import MagicComponent from '@/components/magicComponent';
 import styles from '../styles/Layout.module.css';
+import Header from '@/components/Header/header';
+import Footer from '@/components/Footer/footer';
 
 export default function Layout() {
   return (
     <div className={styles.basicLayout}>
-      <header className={styles.header}>
-        <p>header</p>
-        <div className={styles.nestedGridElement}>Hello</div>
-      </header>
-      <div className={styles.sideNav}>side</div>
+      <Header></Header>
       <main className={styles.content}>
-        <div>World</div>
+        <div contentEditable>The content.</div>
       </main>
-      <MagicComponent></MagicComponent>
+      <Footer />
     </div>
   );
 }

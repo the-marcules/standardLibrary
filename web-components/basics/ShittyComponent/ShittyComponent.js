@@ -41,12 +41,10 @@ class ShittyElement extends HTMLElement {
     }
 
     updateContent() {
-        this.shadowRoot.querySelector(
-            'h2#title'
-        ).textContent = `💩 ${this.getAttribute('title')}`
-        this.shadowRoot.querySelector(
-            'div#description'
-        ).textContent = `${this.getAttribute('description')}`
+        this.shadowRoot.querySelector('h2#title').textContent =
+            `💩 ${this.getAttribute('title')}`
+        this.shadowRoot.querySelector('div#description').textContent =
+            `${this.getAttribute('description')}`
     }
 }
 
