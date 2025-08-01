@@ -1,0 +1,31 @@
+{
+  "name": "playwright-test",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:ui:headed": "npx playwright test --headed --ui"
+  },
+  "dependencies": {
+    "next": "15.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.0",
+    "typescript": "^5"
+  }
+}

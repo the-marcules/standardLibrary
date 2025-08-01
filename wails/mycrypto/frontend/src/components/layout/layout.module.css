@@ -1,0 +1,16 @@
+#app {
+  height: calc(100vh);
+}
+
+.content {
+  margin-top: var(--header-height);
+  margin-left: var(--tools-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--content-padding);
+  height: 100%;
+  width: calc(100vw - var(--tools-width));
+  box-sizing: border-box;
+}

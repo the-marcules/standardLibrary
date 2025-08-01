@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+  <title>Selectors</title>
+  <style>
+    div {
+        border: 1px solid black;
+        display: inline-block;
+        padding: 2px;
+        margin: 
+        2px;
+    }
+    .a {
+        background-color: red;
+    }
+    /* declarations on parents for underlying children overule the childs own class (see .b) */
+    .a div:last-of-type {
+        background-color: yellow;
+    }
+    .b {
+        background-color: green;
+    }
+    /* declarations on parents for underlying children: here the priority is the same (parent on child declaraton), thus  because this comes later it overules the a. div:pseudo-selector class */
+    .b div:last-of-type {
+        background-color: blue;
+    }
+
+
+    .e {
+        background-color: red;
+    }
+
+    /* following sibling */
+    .f + div {
+        background-color: yellow;
+    }
+    .f, .f:has(> div.g) .h {
+        background-color: green;
+    }
+
+
+    .i {
+        background-color: red;
+    }
+
+    .i > * {
+        background-color: green
+    }
+
+    .i ~ div {
+        background-color: yellow;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="a">
+        a
+        <div class="b">
+            b
+            <div class="c">c</div>
+            <div class="c">c
+                <div class="d">d</div>
+            </div>
+            <div class="c">c</div>
+        </div>
+    </div>
+
+
+    <br>
+
+
+    <div class="d">d</div>
+    <div class="e">
+        e
+        <div class="f">f</div>
+        <div class="f">f</div>
+        <div class="f">
+            f
+            <div class="g">
+                g
+                <div class="h">h</div>
+            </div>
+        </div>
+        <div class="f">f</div>
+        <div class="h">h</div>
+    </div>
+    <div class="f">f</div>
+    <div class="f">f</div>
+
+    <br>
+
+    <div class="i">
+        i
+        <div class="j">j</div>
+        <div class="j">j</div>
+        <div class="j">j</div>
+        <div class="j">j</div>
+    </div>
+    <div class="k">k</div>
+    <div class="k">k</div>
+</body>

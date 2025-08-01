@@ -1,0 +1,16 @@
+.documentationContainer > section {
+    height: 1400px
+}
+
+.toc {
+    position: fixed;
+    top: var(--header-height);
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 10px;
+    width: 180px
+}
+
+.contentContainer {
+    margin-left: 200px;
+}

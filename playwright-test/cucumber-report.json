@@ -1,0 +1,171 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "navigation;navigate-to-all-sub-pages",
+        "keyword": "Scenario Outline",
+        "line": 11,
+        "name": "Navigate to all sub pages",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 792657665
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am on the landing page",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 483332
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 5,
+            "name": "I see the Navigation bar",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1965624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I click on the \"Second\" link",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 736875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 7,
+            "name": "i should see the \"Second\" page",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1148974917
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 118689124
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "navigation;navigate-to-all-sub-pages",
+        "keyword": "Scenario Outline",
+        "line": 12,
+        "name": "Navigate to all sub pages",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 616361125
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am on the landing page",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 219291
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 5,
+            "name": "I see the Navigation bar",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 357750
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "I click on the \"About\" link",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 333916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 7,
+            "name": "i should see the \"About\" page",
+            "match": {
+              "location": "tests/steps/landingpage.step.ts:19"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1114971874
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 123637125
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "navigation",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Navigation",
+    "tags": [],
+    "uri": "tests/features/landingpage.feature"
+  }
+]

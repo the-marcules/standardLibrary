@@ -1,0 +1,36 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten.",
+    "notFound": "Seite nicht gefunden.",
+    "goBack": "Zurück",
+    "lng": {
+      "en": "🇬🇧 English",
+      "de": "🇩🇪 Deutsch"
+    }
+  },
+  "navigation": {
+    "home": "Startseite",
+    "about": "Über uns",
+    "documentation": "Dokumentation",
+    "support": "Support"
+  },
+  "HomePage": {
+    "title": "Hallo Welt!",
+    "about": "Zur Über-Seite gehen"
+  },
+  "AboutPage": {
+    "title": "Über uns",
+    "description": "Dies ist die Über-Seite.",
+    "home": "Zurück zur Startseite"
+  },
+  "SupportPage": {
+    "title": "Support",
+    "description": "Wenn Sie Hilfe benötigen, kontaktieren Sie bitte jemand anderen."
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Entschuldigung, wir konnten die gesuchte Seite nicht finden.",
+    "backHome": "Zurück zur Startseite"
+  }
+}

@@ -1,0 +1,40 @@
+.header {
+  position: fixed;
+  top:0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  height: var(--header-height);
+  background-color: var(--primary);
+  border-bottom: 1px solid #eaeaea;
+  color: var(--muted);
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+
+    & > span {
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 2rem;
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+
+    & > a {
+        background-color: var(--muted);
+        color: var(--foreground);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--spacing-xs);
+    }
+  }
+}

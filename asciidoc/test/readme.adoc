@@ -1,0 +1,56 @@
+= Beispiel AsciiDoc Dokument
+Author Name <author@example.com>
+:doctype: article
+:toc: left
+:toclevels: 2
+
+== Einleitung
+
+Dies ist ein Beispiel für ein AsciiDoc-Dokument. AsciiDoc ist ein leichtgewichtiges Markup-Format, das sich gut für technische Dokumentationen eignet.
+
+== Abschnitt 1
+
+Hier ist ein Beispielabschnitt mit etwas Text.
+
+=== Unterabschnitt 1.1
+
+Dies ist ein Unterabschnitt mit einer Liste:
+
+* Punkt 1
+* Punkt 2
+* Punkt 3
+
+== Abschnitt 2
+
+
+Hier ist ein weiterer Abschnitt mit einem Codeblock:
+
+[source,python]
+
+----
+def hallo_welt():
+    print("Hallo, Welt!")
+----
+
+== Fazit
+
+Das war ein einfaches Beispiel für ein AsciiDoc-Dokument. Weitere Informationen finden Sie in der offiziellen Dokumentation.
+
+== Abschnitt 3
+
+Hier ist ein Beispielabschnitt mit einem Flussdiagramm:
+
+[plantuml, format=svg]
+----
+@startuml
+start
+:Benutzer gibt Daten ein;
+:System verarbeitet Daten;
+if (Daten gültig?) then (ja)
+    :Daten speichern;
+else (nein)
+    :Fehlermeldung anzeigen;
+endif
+stop
+@enduml
+----
