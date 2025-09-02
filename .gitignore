@@ -3,3 +3,4 @@ node_modules
 ./**/.DS_Store
 java/sprintboot/gs-rest-service
 */**    node_modules */
+wordpress/local-dev-env/.env
