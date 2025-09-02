@@ -1,0 +1,15 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "cypress for e2e testing",
+  "license": "ISC",
+  "author": "mrcls",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open"
+  },
+  "dependencies": {
+    "cypress": "^15.0.0"
+  }
+}

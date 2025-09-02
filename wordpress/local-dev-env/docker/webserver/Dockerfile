@@ -16,10 +16,6 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 RUN wp --info
 RUN wp core download --allow-root
 
-# RUN wp core config - dbname=$MYSQL_DATABASE - dbuser=$MYSQL_USER -dbpass=$MYSQL_PASSWORD - dbhost=database --allow-root --skip-check --allow-root
-# RUN wp core install — url=http://localhost — title=wordpress — admin_user=admin — admin_password=admin — admin_email=marcules@gmail.com --allow-root
-
-
 
 COPY src/woody-products.zip /var/www/html/wordpress/woody-products.zip
 COPY src/woodyWoodyVodka.zip /var/www/html/wordpress/woodyWoodyVodka.zip
