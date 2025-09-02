@@ -8,11 +8,8 @@ services:
       context: ../
       dockerfile: docker/database/Dockerfile
     container_name: database
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppassword
+    env_file:
+      - ../.env
     ports:
       - "3306:3306"
 
@@ -23,12 +20,8 @@ services:
       context: ../
       dockerfile: docker/webserver/Dockerfile
     container_name: app
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppassword
-      WORDPRESS_URL: http://localhost:8080/wordpress
+    env_file:
+      - ../.env
     tty: true
     ports:
       - "8080:80"
