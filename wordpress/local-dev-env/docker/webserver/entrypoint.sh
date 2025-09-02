@@ -33,8 +33,8 @@ wp plugin activate woody-products --allow-root || true
 wp option update wopro_shop_toggle 1 --allow-root
 wp option update wopro_paypal_client_id 888 --allow-root
 wp option update wopro_paypal_client_secret 888 --allow-root
-wp option update wopro_paypal_client_id_sandbox 888 --allow-root
-wp option update wopro_paypal_client_secret_sandbox 888 --allow-root
+wp option update wopro_paypal_client_id_sandbox $PAYPAL_SANDBOX_CLIENT_ID --allow-root
+wp option update wopro_paypal_client_secret_sandbox $PAYPAL_SANDBOX_CLIENT_SECRET --allow-root
 wp option update wopro_paypal_sandbox_toggle 1 --allow-root
 wp option update wopro_shipping_price 888 --allow-root
 

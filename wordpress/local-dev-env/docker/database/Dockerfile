@@ -5,5 +5,6 @@ ENV MYSQL_DATABASE=wordpress
 ENV MYSQL_USER=wpuser
 ENV MYSQL_PASSWORD=wppassword
 
+
 # Optionally, add a custom MySQL config file
 # COPY my.cnf /etc/mysql/conf.d/
