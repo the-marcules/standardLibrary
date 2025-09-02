@@ -20,6 +20,7 @@ RUN wp core download --allow-root
 COPY src/woody-products.zip /var/www/html/wordpress/woody-products.zip
 COPY src/woodyWoodyVodka.zip /var/www/html/wordpress/woodyWoodyVodka.zip
 COPY docker/webserver/entrypoint.sh /entrypoint.sh
+COPY src/bulk_stock_import.php /var/www/html/wordpress/bulk_stock_import.php
 
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

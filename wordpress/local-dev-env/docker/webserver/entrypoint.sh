@@ -95,6 +95,9 @@ wp menu item add-post "$FOOTER_MENU_NAME" $IMPRESSUM_ID --allow-root
 TEST_PRODUCT=$(wp post create --post_type=wopro_product --post_title="Testprodukt" --post_content="Dies ist ein Testprodukt." --post_status=publish --porcelain --allow-root)
 wp post meta update $TEST_PRODUCT price 25.99 --allow-root
 
+wp eval-file /var/www/html/wordpress/bulk_stock_import.php $TEST_PRODUCT --allow-root
+# wp post meta update $TEST_PRODUCT stock 'a:1:{s:7:"default";s:1:"0";}"' --allow-root
+
 
 echo "Wordpress erfolgreich eingerichtet: 🔗 '$WORDPRESS_URL'"
 
