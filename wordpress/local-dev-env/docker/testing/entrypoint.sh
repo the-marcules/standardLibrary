@@ -7,5 +7,5 @@ until curl -s --head --request GET http://app:80/ready/ok.txt | grep "200"; do
     sleep 2
 done
 echo "WordPress site is up!"
-ech "current dir $(pwd)"
+echo "current dir $(pwd)"
 npx cypress run --e2e 
