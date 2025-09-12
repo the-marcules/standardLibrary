@@ -10,6 +10,11 @@
     "test": "npx cypress open"
   },
   "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.1.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "cypress": "^15.0.0"
+  },
+  "devDependencies": {
+    "cypress-iframe": "^1.0.1"
   }
 }
