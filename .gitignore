@@ -4,3 +4,4 @@ node_modules
 java/sprintboot/gs-rest-service
 */**    node_modules */
 wordpress/local-dev-env/.env
+.env
