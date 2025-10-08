@@ -5,9 +5,9 @@ import (
 	"log/slog"
 )
 
-func (c *Client) Decrypt(payload string) string {
+func (c *Client) Decrypt(payload, keyId string) string {
 
-	data := c.BuildDecryptBody(payload)
+	data := c.BuildDecryptBody(payload, keyId)
 
 	response, err := c.requestHandler("POST", "/v2/decrypt", data)
 	if err != nil {
@@ -23,7 +23,7 @@ func (c *Client) Decrypt(payload string) string {
 	return ResponseBuilder(body, nil)
 }
 
-func (c *Client) BuildDecryptBody(payload string) []byte {
+func (c *Client) BuildDecryptBody(payload, keyId string) []byte {
 
 	return []byte(`{
 		"authorization": {
@@ -39,7 +39,7 @@ func (c *Client) BuildDecryptBody(payload string) []byte {
 		"decrypt": {
 			"key": {
 				"static": {
-					"kid": "` + c.config.Scenarios.Decrypt.ScenarioKeyName + `"
+					"kid": "` + keyId + `"
 				}
 			}
 		}
