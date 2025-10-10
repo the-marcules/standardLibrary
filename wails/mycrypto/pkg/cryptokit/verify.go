@@ -1,7 +1,6 @@
 package cryptokit
 
 import (
-	"io"
 	"log/slog"
 )
 
@@ -29,12 +28,5 @@ func (c *Client) Verify(format, signature string) string {
 		return ResponseBuilder(nil, err)
 	}
 
-	slog.Info("Response: ", "response", response)
-
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return ResponseBuilder(nil, err)
-	}
-
-	return ResponseBuilder(body, nil)
+	return ResponseBuilder(response, nil)
 }

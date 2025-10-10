@@ -1,10 +1,15 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { NotificationProps, NotificationType } from './notification';
-import styles from './notification.module.css';
-import { v4 as uuidv4 } from 'uuid';
+import { createContext, useContext, useEffect, useState } from "react";
+import { NotificationProps, NotificationType } from "./notification";
+import styles from "./notification.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 export type NotificationContextType = {
-  addNotification: (type: NotificationType, title: string, message: string, ttl?: number) => void;
+  addNotification: (
+    type: NotificationType,
+    title: string,
+    message: string,
+    ttl?: number
+  ) => void;
   removeNotification: (id: string) => void;
   notifications: NotificationMap | undefined;
 };
@@ -25,10 +30,16 @@ export type NotificationContextProps = NotificationProps & {
 
 export type NotificationMap = Map<string, NotificationContextProps>;
 
-const notificationContext = createContext<NotificationContextType | undefined>(undefined);
+const notificationContext = createContext<NotificationContextType | undefined>(
+  undefined
+);
 export const useNotification = () => useContext(notificationContext);
 
-export function NotificationProvider({ children }: { children: JSX.Element }): JSX.Element {
+export function NotificationProvider({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element {
   const [notifications, setNotifications] = useState<NotificationMap>();
 
   useEffect(() => {
@@ -37,8 +48,6 @@ export function NotificationProvider({ children }: { children: JSX.Element }): J
     }
 
     const ttlCheckInterval = setInterval(() => {
-      console.log('Checking TTL');
-
       const date = Date.now();
       let needToUpdate = false;
       if (notifications) {
@@ -69,7 +78,12 @@ export function NotificationProvider({ children }: { children: JSX.Element }): J
     }
   };
 
-  const addNotification = (type: NotificationType, title: string, message: string, ttl?: number) => {
+  const addNotification = (
+    type: NotificationType,
+    title: string,
+    message: string,
+    ttl?: number
+  ) => {
     const uuid = uuidv4();
     const newNotifications = new Map(notifications);
 
@@ -78,7 +92,9 @@ export function NotificationProvider({ children }: { children: JSX.Element }): J
   };
 
   return (
-    <notificationContext.Provider value={{ addNotification, removeNotification, notifications }}>
+    <notificationContext.Provider
+      value={{ addNotification, removeNotification, notifications }}
+    >
       {children}
     </notificationContext.Provider>
   );

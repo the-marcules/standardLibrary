@@ -41,7 +41,7 @@ export default function Decrypt(): JSX.Element {
   return (
     <>
       <div className="inputBox">
-        <h3>Public key</h3>
+        <h3>Key name</h3>
         <select
           id="publicKey"
           name="publicKey"

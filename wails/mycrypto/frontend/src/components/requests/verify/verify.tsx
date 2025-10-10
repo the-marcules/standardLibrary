@@ -1,22 +1,26 @@
-import { ChangeEvent, TextareaHTMLAttributes, useState } from 'react';
-import { useNotification, NotificationTTL, SetTTL } from '../../notification/notificationProvider';
-import Button from '../../Button/Button';
-import { Verify as CryptokitVerify } from '../../../../wailsjs/go/cryptokit/Client';
-import Result from '../../result/result';
+import { ChangeEvent, TextareaHTMLAttributes, useState } from "react";
+import {
+  useNotification,
+  NotificationTTL,
+  SetTTL,
+} from "../../notification/notificationProvider";
+import Button from "../../Button/Button";
+import { Verify as CryptokitVerify } from "../../../../wailsjs/go/cryptokit/Client";
+import Result from "../../result/result";
 
 export function Verify() {
   const [result, setResult] = useState<Response>();
-  const [format, setFormat] = useState<string>('application/mose');
-  const [signature, setSignature] = useState<string>('');
+  const [format, setFormat] = useState<string>("application/mose");
+  const [signature, setSignature] = useState<string>("");
 
   const notificationService = useNotification();
 
   function handleVerify() {
-    if (signature === '') {
+    if (signature === "") {
       notificationService?.addNotification(
-        'warning',
-        'Warning',
-        'Payload cannot be empty. Fill out the payload field and try again, you must.',
+        "warning",
+        "Warning",
+        "Payload cannot be empty. Fill out the payload field and try again, you must.",
         SetTTL(NotificationTTL.warning)
       );
       return;
@@ -24,46 +28,61 @@ export function Verify() {
     CryptokitVerify(format, signature).then((response) => {
       const verificationResponse: Response = JSON.parse(response);
       setResult(verificationResponse);
-      if (verificationResponse.verification.result == 'good') {
+      if (verificationResponse.verification.result == "good") {
         notificationService?.addNotification(
-          'success',
-          'Valid',
-          'Signature is valid and verified.',
+          "success",
+          "Valid",
+          "Signature is valid and verified.",
           SetTTL(NotificationTTL.success)
         );
       } else {
-        notificationService?.addNotification('error', 'Invalid', 'Signature is invalid.');
+        notificationService?.addNotification(
+          "error",
+          "Invalid",
+          "Signature is invalid."
+        );
       }
     });
   }
 
   const reset = () => {
-    const textarea = document.querySelector<HTMLTextAreaElement>('#signInput');
+    const textarea = document.querySelector<HTMLTextAreaElement>("#signInput");
     if (textarea) {
-      textarea.value = '';
+      textarea.value = "";
     }
-    setFormat('');
-    setSignature('');
+    setFormat("");
+    setSignature("");
   };
 
-  const updateFormat = (e: ChangeEvent<HTMLSelectElement>) => setFormat(e.target.value);
-  const updateSignature = (e: ChangeEvent<HTMLTextAreaElement>) => setSignature(e.target.value);
+  const updateFormat = (e: ChangeEvent<HTMLSelectElement>) =>
+    setFormat(e.target.value);
+  const updateSignature = (e: ChangeEvent<HTMLTextAreaElement>) =>
+    setSignature(e.target.value);
 
   return (
     <>
       <div id="input" className={`inputBox`}>
         <h3>Format</h3>
-        <label title="Payload">
-          {/* <input onChange={updateFormat} id="formatInput" placeholder="Sign format" /> */}
-          <select onChange={updateFormat} id="formatInput">
+        <label title="format">
+          <select
+            onChange={updateFormat}
+            id="formatInput"
+            name="format"
+            title="format"
+          >
             <option value="application/mose">application/mose</option>
+            <option value="application/jws">application/jws</option>
           </select>
         </label>
         <h3>Signature</h3>
         <label title="Payload">
-          <textarea onChange={updateSignature} id="signInput" placeholder="Your signature" />
+          <textarea
+            onChange={updateSignature}
+            id="signInput"
+            placeholder="Your signature"
+          />
         </label>
-        <div className={'buttonContainer'}>
+        <div className={"buttonContainer"}>
           <Button onClick={() => reset()} variant="secondary">
             Cancel
           </Button>

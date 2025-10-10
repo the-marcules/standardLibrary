@@ -1,13 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from "react";
 
-import { Encrypt as CryptoKitEncrypt, GetKeysString } from '../../../../wailsjs/go/cryptokit/Client';
-import Result from '../../result/result';
-import Button from '../../Button/Button';
+import {
+  Encrypt as CryptoKitEncrypt,
+  GetKeysString,
+} from "../../../../wailsjs/go/cryptokit/Client";
+import Result from "../../result/result";
+import Button from "../../Button/Button";
 
 export default function Encrypt(): JSX.Element {
-  const [payload, setPayload] = useState<string>('');
+  const [payload, setPayload] = useState<string>("");
   const [result, setResult] = useState<Response>();
-  const [selectedKey, setSelectedKey] = useState<string>('');
+  const [selectedKey, setSelectedKey] = useState<string>("");
   const [keys, setKeys] = useState<KeyData[]>([]);
 
   useEffect(() => {
@@ -21,25 +24,25 @@ export default function Encrypt(): JSX.Element {
   }, []);
 
   const handleEncrypt = () => {
-    console.log('Encrypting payload:', payload);
+    console.log("Encrypting payload:", payload);
     CryptoKitEncrypt(payload, selectedKey).then((response) => {
       setResult(JSON.parse(response));
     });
   };
 
   const reset = () => {
-    const textarea = document.querySelector<HTMLTextAreaElement>('#signInput');
+    const textarea = document.querySelector<HTMLTextAreaElement>("#signInput");
     if (textarea) {
-      textarea.value = '';
+      textarea.value = "";
     }
-    setPayload('');
+    setPayload("");
     setResult(undefined);
   };
 
   return (
     <>
       <div className="inputBox">
-        <h3>Public key</h3>
+        <h3>Key name</h3>
         <select
           id="publicKey"
           name="publicKey"
@@ -65,14 +68,16 @@ export default function Encrypt(): JSX.Element {
             setPayload(e.target.value);
           }}
         />
-        <div className={'buttonContainer'}>
+        <div className={"buttonContainer"}>
           <Button onClick={() => reset()} variant="secondary">
             Cancel
           </Button>
           <Button onClick={handleEncrypt}>Encrypt &raquo;</Button>
         </div>
       </div>
-      {result && <Result title="Encryption result" response={result as Response} />}
+      {result && (
+        <Result title="Encryption result" response={result as Response} />
+      )}
     </>
   );
 }

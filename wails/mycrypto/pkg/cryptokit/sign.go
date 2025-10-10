@@ -1,7 +1,6 @@
 package cryptokit
 
 import (
-	"io"
 	"log/slog"
 )
 
@@ -23,7 +22,7 @@ func (c *Client) Sign(payload string) string {
 	      "name": "text-plain"
 	    },
 	    "outputPolicy": {
-	      "name": "MOSE_plain"
+	      "name": "JWS" 
 	    },
 	    "key": {
 	      "static": {
@@ -35,15 +34,11 @@ func (c *Client) Sign(payload string) string {
 	`)
 
 	response, err := c.requestHandler("POST", "/v2/sign", data)
+
 	if err != nil {
 		slog.Error("Error signing the payload: ", "error", err)
 		return ResponseBuilder(nil, err)
 	}
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return ResponseBuilder(nil, err)
-	}
-
-	return ResponseBuilder(body, nil)
+	return ResponseBuilder(response, nil)
 }

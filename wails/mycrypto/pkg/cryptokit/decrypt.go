@@ -1,7 +1,6 @@
 package cryptokit
 
 import (
-	"io"
 	"log/slog"
 )
 
@@ -15,12 +14,7 @@ func (c *Client) Decrypt(payload, keyId string) string {
 		return ResponseBuilder(nil, err)
 	}
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return ResponseBuilder(nil, err)
-	}
-
-	return ResponseBuilder(body, nil)
+	return ResponseBuilder(response, nil)
 }
 
 func (c *Client) BuildDecryptBody(payload, keyId string) []byte {

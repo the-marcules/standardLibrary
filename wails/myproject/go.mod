@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd
 	github.com/stretchr/testify v1.10.0
-	github.com/wailsapp/wails/v2 v2.9.2
+	github.com/wailsapp/wails/v2 v2.10.1
 )
 
 require (

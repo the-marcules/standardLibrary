@@ -2,7 +2,6 @@ package cryptokit
 
 import (
 	"fmt"
-	"io"
 	"log/slog"
 )
 
@@ -65,10 +64,5 @@ func (c *Client) Encrypt(payload string, pubKeyId string) string {
 		return ResponseBuilder(nil, err)
 	}
 
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		return ResponseBuilder(nil, err)
-	}
-
-	return ResponseBuilder(body, nil)
+	return ResponseBuilder(response, nil)
 }
