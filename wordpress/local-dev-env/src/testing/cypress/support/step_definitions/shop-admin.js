@@ -20,6 +20,11 @@ Given(
   }
 );
 
+Given("I am on the Woody Products Settings page {string}", (tab) => {
+  cy.visit("wp-admin/admin.php?page="+ tab);
+  cy.get("h1").contains("Gutscheine").should("be.visible");
+});
+
 Then("I see {string} in the products list", (text) => {
   cy.get("table.wp-list-table").contains(text);
 });

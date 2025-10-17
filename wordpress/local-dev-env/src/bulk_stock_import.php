@@ -28,5 +28,5 @@ foreach ($post_ids as $post_id) {
     }
 }
 
-echo "\n✅ Bulk Import abgeschlossen!\n";
+echo "✅ Bulk Import abgeschlossen!\n\n";
 ?>

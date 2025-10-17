@@ -22,7 +22,7 @@ done
 
 echo "[testing] ✅ WordPress ist online: http://localhost:8080/wordpress"
 
-
+echo "[testing] 🚀 Starte die Tests..."
 cd ../src/testing
 npm install -y
 npx cypress run
@@ -46,3 +46,5 @@ done
 echo "[testing] 🗑️  Shutting down the WordPress development environment..."
 cd ../../docker
 podman-compose down -v
+
+echo "[testing] ✅ Testumgebung wurde heruntergefahren. Bye! 👋"
