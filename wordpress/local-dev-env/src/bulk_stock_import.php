@@ -7,7 +7,7 @@
 if (!empty($args)) {
     $post_ids = $args;
 } else {
-    echo "Bitte geben Sie mindestens eine Post-ID als Argument an.\n";
+    echo "❌ Bitte geben Sie mindestens eine Post-ID als Argument an.\n";
     exit(1);
 }
 // Der serialisierte Stock-Wert
@@ -19,14 +19,14 @@ foreach ($post_ids as $post_id) {
         $result = update_post_meta($post_id, 'stock', $stock_value);
         
         if ($result) {
-            echo "✓ Stock Meta für Post ID {$post_id} erfolgreich gesetzt\n";
+            echo "✅  Stock Meta für Post ID {$post_id} erfolgreich gesetzt\n";
         } else {
-            echo "✗ Fehler beim Setzen der Stock Meta für Post ID {$post_id}\n";
+            echo "❌  Fehler beim Setzen der Stock Meta für Post ID {$post_id}\n";
         }
     } else {
-        echo "⚠ Post ID {$post_id} existiert nicht\n";
+        echo "⚠️  Post ID {$post_id} existiert nicht\n";
     }
 }
 
-echo "\nBulk Import abgeschlossen!\n";
+echo "\n✅ Bulk Import abgeschlossen!\n";
 ?>

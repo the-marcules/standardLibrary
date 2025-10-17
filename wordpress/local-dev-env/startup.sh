@@ -3,11 +3,11 @@
 
 (rm src/*.zip)
 
-# (cd ../../../koelner-holzschmied/woody-products/src && zip -r woody-products.zip * && mv woody-products.zip ../../../standardLibrary/wordpress/local-dev-env/src)
-# (cd ../../../koelner-holzschmied/woodyWoodyVodka/src && zip -r woodyWoodyVodka.zip * && mv woodyWoodyVodka.zip ../../../standardLibrary/wordpress/local-dev-env/src)
+(cd ../../../koelner-holzschmied/woody-products/src && zip -r woody-products.zip * && mv woody-products.zip ../../../standardLibrary/wordpress/local-dev-env/src)
+(cd ../../../koelner-holzschmied/woodyWoodyVodka/src && zip -r woodyWoodyVodka.zip * && mv woodyWoodyVodka.zip ../../../standardLibrary/wordpress/local-dev-env/src)
 
-(cd ../../../private/wordpress/woody-products/src && zip -r woody-products.zip * && mv woody-products.zip ../../../../standardLibrary/wordpress/local-dev-env/src)
-(cd ../../../private/wordpress/woodyWoodyVodka/src && zip -r woodyWoodyVodka.zip * && mv woodyWoodyVodka.zip ../../../../standardLibrary/wordpress/local-dev-env/src)
+# (cd ../../../private/wordpress/woody-products/src && zip -r woody-products.zip * && mv woody-products.zip ../../../../standardLibrary/wordpress/local-dev-env/src)
+# (cd ../../../private/wordpress/woodyWoodyVodka/src && zip -r woodyWoodyVodka.zip * && mv woodyWoodyVodka.zip ../../../../standardLibrary/wordpress/local-dev-env/src)
 
 # Start the WordPress development environment
 cd docker && podman-compose up --build -d
@@ -24,9 +24,25 @@ echo "[testing] ✅ WordPress ist online: http://localhost:8080/wordpress"
 
 
 cd ../src/testing
+npm install -y
 npx cypress run
 
+
+
+cmd='wait'
+while [[ $cmd != 'exit' ]]; do
+
+    read -p "[testing] ❓ Soll die Testumgebung heruntergefahren werden? (y/n) " yn
+    case $yn in
+        [Yy]* ) cmd='exit';;
+        [Nn]* ) cmd='wait';;
+        * ) echo "[testing] ⚠️  Bitte mit y oder n antworten.";;
+    esac
+    timeout=$((timeout -1))
+done
+
+
 # shut everything down
-echo "[testing] 🗑️ Shutting down the WordPress development environment..."
+echo "[testing] 🗑️  Shutting down the WordPress development environment..."
 cd ../../docker
 podman-compose down -v
