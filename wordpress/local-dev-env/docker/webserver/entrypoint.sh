@@ -11,10 +11,15 @@ unzip -o /var/www/html/wordpress/woodyWoodyVodka.zip -d /var/www/html/wordpress/
 service apache2 restart
 
 # Warte, bis die Datenbank erreichbar ist
-until mysql -h database -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1;" "$MYSQL_DATABASE" >/dev/null 2>&1; do
-  echo "Warte auf die Datenbank..."
+counter=0
+until mysql -h database -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1;" "$MYSQL_DATABASE" --skip-ssl >/dev/null 2>&1; do
+  counter=$((counter + 1))
+  echo "($counter) ⏳  Warte auf die Datenbank..."
   sleep 3
 done
+
+echo "✅ Datenbank ist erreichbar."
+echo "🏗️  Richte WordPress ein..."
 
 wp core config --dbname="$MYSQL_DATABASE" --dbuser=root --dbpass="$MYSQL_ROOT_PASSWORD" --dbhost=database --allow-root --skip-check
 wp core install --url="$WORDPRESS_URL" --title=wordpress --admin_user=admin --admin_password=admin --admin_email=marcules@gmail.com --allow-root
@@ -100,6 +105,6 @@ wp eval-file /var/www/html/wordpress/bulk_stock_import.php $TEST_PRODUCT --allow
 
 mkdir -p /var/www/html/ready
 touch /var/www/html/ready/ok.txt
-echo "Wordpress erfolgreich eingerichtet: 🔗 '$WORDPRESS_URL'"
+echo "✅ Wordpress erfolgreich eingerichtet: 🔗 '$WORDPRESS_URL'"
 
 exec bash || exec sh

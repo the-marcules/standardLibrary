@@ -3,7 +3,9 @@ import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 Given("I log in to the wordpress admin area", () => {
   cy.visit("/wp-admin");
   cy.get("input#user_login").type("admin");
+  cy.wait(500);
   cy.get("input#user_pass").type("admin");
+  cy.wait(500);
   cy.get("input#wp-submit").click();
   cy.url().should("include", "/wp-admin/");
 });

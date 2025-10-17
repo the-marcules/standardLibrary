@@ -10,9 +10,23 @@
 (cd ../../../private/wordpress/woodyWoodyVodka/src && zip -r woodyWoodyVodka.zip * && mv woodyWoodyVodka.zip ../../../../standardLibrary/wordpress/local-dev-env/src)
 
 # Start the WordPress development environment
-cd docker && podman-compose up --build
+cd docker && podman-compose up --build -d
+
+# Wait for wordpress to be ready
+counter=0
+until curl -s --head --request GET http://localhost:8080/ready/ok.txt | grep "200"; do
+    counter=$((counter + 1))
+    echo "[testing] ⏳  Warte auf die Einrichtung von WordPress... ($counter)"
+    sleep 3
+done
+
+echo "[testing] ✅ WordPress ist online: http://localhost:8080/wordpress"
 
 
+cd ../src/testing
+npx cypress run
 
-# Open the WordPress site in the default web browser
-# xdg-open http://localhost:8000
+# shut everything down
+echo "[testing] 🗑️ Shutting down the WordPress development environment..."
+cd ../../docker
+podman-compose down -v

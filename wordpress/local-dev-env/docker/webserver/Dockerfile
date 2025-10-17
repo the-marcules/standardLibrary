@@ -1,10 +1,23 @@
 # Verwende ein minimales Linux-Image
-FROM ubuntu/apache2:latest
+FROM php:8.3-apache 
+#ubuntu/apache2:latest
 
 RUN apt update
 
-RUN apt install -y php8.3 php8.3-mysql php8.3-xml php8.3-curl php8.3-gd php8.3-mbstring php8.3-zip php8.3-intl php8.3-bcmath libapache2-mod-php8.3 wget unzip mysql-client curl nano
+RUN apt-get update && apt-get install -y \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libgd-dev \
+    libzip-dev \
+    libicu-dev \
+    libonig-dev \
+    unzip \
+    nano \
+    wget \
+    curl \
+    default-mysql-client
 
+RUN docker-php-ext-install mysqli bcmath
 
 RUN mkdir -p /var/www/html/wordpress
 
@@ -14,7 +27,7 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 RUN wp --info
-RUN wp core download --allow-root
+RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
 
 
 COPY src/woody-products.zip /var/www/html/wordpress/woody-products.zip

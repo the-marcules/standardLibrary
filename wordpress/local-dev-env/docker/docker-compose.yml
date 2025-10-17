@@ -21,19 +21,7 @@ services:
     env_file:
       - ../.env
     tty: true
-    ports:
-      - "8080:80"
     expose:
       - "80"
-
-
-  testing:    
-    depends_on:
-      - app
-    build: 
-      context: ../
-      dockerfile: docker/testing/Dockerfile
-    env_file:
-      - ../.env
-    volumes:
-      - ./cypress-output:/app/cypress
+    ports:
+      - "8080:80"

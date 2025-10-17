@@ -8,14 +8,15 @@ const {
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "http://app:80/wordpress/",
+    baseUrl: "http://localhost:8080/wordpress/",
     specPattern: "cypress/e2e/**/*.feature",
-    supportFile: "cypress/support/e2e.js",
+    supportFile: false,
     env: {
       cucumber: {
         stepDefinitions: "cypress/support/step_definitions/*.js",
       },
     },
+    video: true,
     async setupNodeEvents(on, config) {
       await cucumber(on, config);
       on(
