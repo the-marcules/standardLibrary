@@ -36,6 +36,12 @@ Then("I see {string} in the {string} content area", (text, region) => {
   cy.get(region).contains(text);
 });
 
+Then("I do not see {string} in the {string} content area", (text, region) => {
+  if(text) {
+    cy.get(region).contains(text).should("not.exist");
+  }
+});
+
 Then("I see the product {string}", (productName) => {
   cy.get(".wopro-products-container").contains(productName);
 });

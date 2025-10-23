@@ -11,12 +11,6 @@ module.exports = defineConfig({
     baseUrl: "http://localhost:8080/wordpress/",
     specPattern: "cypress/e2e/**/*.feature",
     supportFile: false,
-    env: {
-      cucumber: {
-        stepDefinitions: "cypress/support/step_definitions/*.js",
-      },
-    },
-    video: true,
     async setupNodeEvents(on, config) {
       await cucumber(on, config);
       on(

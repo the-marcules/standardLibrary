@@ -11,7 +11,7 @@ if (!empty($args)) {
     exit(1);
 }
 // Der serialisierte Stock-Wert
-$stock_value = array("default" => "1");
+$stock_value = array("default" => "3");
 
 foreach ($post_ids as $post_id) {
     // Prüfen ob Post existiert

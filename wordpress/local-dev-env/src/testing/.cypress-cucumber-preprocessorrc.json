@@ -1,0 +1,7 @@
+{
+  "stepDefinitions": [
+    "cypress/e2e/[filepath].js",
+    "cypress/e2e/common-step-definitions/*.js",
+    "cypress/e2e/step_definitions/**/*.js"
+  ]
+}

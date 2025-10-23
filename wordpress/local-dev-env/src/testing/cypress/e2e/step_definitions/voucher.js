@@ -21,7 +21,9 @@ When("I set the voucher code to {string}", (code) => {
 }); 
 
 When("I set the voucher value to {string}", (value) => {
-  cy.get('input[name="value"]').clear().type(value);
+    if(value) {
+      cy.get('input[name="value"]').clear().type(value);
+    }
 });
 
 When("I submit the voucher form", () => {
@@ -58,4 +60,8 @@ Then("I see the success message that the voucher was deleted", () => {
     "contain.text",
     "Gutschein gelöscht."
   );
+});
+
+When("I enter the voucher code {string} in the voucher input field", (voucherCode) => {
+  cy.get('input[name="voucher-code"]').type(voucherCode);
 });
