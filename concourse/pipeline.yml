@@ -1,0 +1,40 @@
+resources:
+  - name: source-code
+    type: git
+    source:
+      uri: https://gitbub.com/the-marcules/stardardLibrary.git
+      branch: master
+
+jobs:
+  - name: my-pipe
+    plan:
+      - get: source-code
+      - task: prepare-files
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: node
+              tag: 24-slim
+          outputs:
+            - name: artifacts
+          run:
+            path: sh
+            args:
+              - -c
+              - echo "Hello, Concourse!" > artifacts/greeting.txt
+
+      - task: process-files
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: node
+              tag: 24-slim
+          inputs:
+            - name: artifacts
+          run:
+            path: cat
+            args: ["artifacts/greeting.txt"]
