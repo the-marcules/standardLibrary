@@ -9,8 +9,8 @@ export default async function AboutPage({
 
   return (
     <div>
-      <h1>{t("aboutPage.title")}</h1>
-      <p>{t("aboutPage.description")}</p>
+      <h1>{t("about.title")}</h1>
+      <p>{t("about.description")}</p>
     </div>
   );
 }

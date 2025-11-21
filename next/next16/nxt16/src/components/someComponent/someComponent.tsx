@@ -7,9 +7,8 @@ export default function SomeComponent() {
   return (
     <div>
       <ul>
-        <li>{t("common.title")}</li>
-        <li>{t("common.description")}</li>
-        <li>{t("common.welcome")}</li>
+        <li>{t("common.does.not.exist")}</li>
+        <li>{t("does.not.Exist.either")}</li>
       </ul>
       {t("common.loading")}
     </div>

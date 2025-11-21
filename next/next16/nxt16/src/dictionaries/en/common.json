@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome",
+  "loading": "Loading...",
+  "error": "An error has occurred",
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

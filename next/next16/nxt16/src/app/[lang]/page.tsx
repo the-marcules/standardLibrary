@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { getDictionary } from "@/core/translation/dictionaries";
+import getTranslations from "@/core/translation/translation";
 import SomeComponent from "@/components/someComponent/someComponent";
 
 export default async function Home({
@@ -7,14 +7,13 @@ export default async function Home({
 }: {
   params: Promise<{ lang: Locale }>;
 }) {
-  const { lang: locale } = await params;
-  const dict = await getDictionary(locale);
+  const t = await getTranslations(params);
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <div className={styles.intro}>
-          <h1>{dict.common.welcome}</h1>
+          <h1>{t("common.welcome")}</h1>
           <SomeComponent></SomeComponent>
         </div>
       </main>
