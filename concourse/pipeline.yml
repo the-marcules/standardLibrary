@@ -7,7 +7,7 @@ resources:
       private_key: ((git-private-key))
 
 jobs:
-  - name: my-pipe
+  - name: prepare-and-test
     plan:
       - get: source-code
         trigger: true
@@ -19,3 +19,8 @@ jobs:
         file: source-code/concourse/tasks/build-go-app.yml
       - task: run
         file: source-code/concourse/tasks/run.yml
+  - name: some-job-after
+    plan:
+      - get: source-code
+        passed: [prepare-and-test]
+        trigger: true
