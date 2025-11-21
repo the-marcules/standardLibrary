@@ -33,10 +33,4 @@ jobs:
               repository: alpine
               tag: latest
           run:
-            path: sh
-            args:
-              - -c
-              - |
-                cd source-code/concourse/scripts
-                chomod +x finish.sh
-                ./finish.sh
+            path: source-code/concourse/scripts/finish.sh
