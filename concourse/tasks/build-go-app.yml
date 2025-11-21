@@ -1,0 +1,22 @@
+config:
+  platform: linux
+  image_resource:
+    type: docker-image
+    source:
+      repository: golang
+      tag: latest
+  inputs:
+    - name: artifacts
+    - name: build
+  outputs:
+    - name: artifacts
+  run:
+    path: sh
+    args:
+      - -c
+      - |
+        echo "Building Go app..."
+        cd build
+        go build -o myapp main.go
+        cp myapp ../artifacts/
+        echo "Build complete."
