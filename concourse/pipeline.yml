@@ -12,10 +12,10 @@ jobs:
       - get: source-code
         trigger: true
       - task: prepare-files
-        file: tasks/prepare-files.yml
+        file: source-code/concourse/tasks/prepare-files.yml
       - task: run-tests
-        file: tasks/run-tests.yml
+        file: source-code/concourse/tasks/run-tests.yml
       - task: build-go-app
-        file: tasks/build-go-app.yml
+        file: source-code/concourse/tasks/build-go-app.yml
       - task: run
-        file: tasks/run.yml
+        file: source-code/concourse/tasks/run.yml
