@@ -13,4 +13,4 @@ run:
     - |
       cd artifacts
       chmod +x myapp
-      ./myapp
+      ./myapp 2 4
