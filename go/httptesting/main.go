@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"de.marcules.httptesting/routes"
+	"de.marcules.httptesting/routes/upload"
 	"de.marcules.httptesting/routes/users"
 )
 
@@ -29,4 +30,5 @@ func main() {
 func registerRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", routes.RootHandler)
 	mux.HandleFunc("GET /users", users.GetUsers)
+	mux.HandleFunc("PUT /upload", upload.FileUploadHandler)
 }
