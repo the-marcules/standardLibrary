@@ -1,6 +1,6 @@
-import { Link, NavLink } from 'react-router';
-import logo from '../../assets/images/cryptokit-logo-white.svg';
-import styles from './header.module.css';
+import { Link, NavLink } from "react-router";
+import logo from "../../assets/images/cryptokit-logo-white.svg";
+import styles from "./header.module.css";
 export default function Header() {
   return (
     <div className={styles.header}>
@@ -8,22 +8,52 @@ export default function Header() {
       <nav>
         <ul>
           <li>
-            <NavLink to={'/sign'} className={({ isActive }) => isActiveCheck(isActive, styles.isActive)}>
+            <NavLink
+              to={"/sign"}
+              className={({ isActive }) =>
+                isActiveCheck(isActive, styles.isActive)
+              }
+            >
               <span>Sign</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/verify" className={({ isActive }) => isActiveCheck(isActive, styles.isActive)}>
+            <NavLink
+              to={"/codeSign"}
+              className={({ isActive }) =>
+                isActiveCheck(isActive, styles.isActive)
+              }
+            >
+              <span>PS1 Code Sign</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/verify"
+              className={({ isActive }) =>
+                isActiveCheck(isActive, styles.isActive)
+              }
+            >
               <span>Verify</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/encrypt" className={({ isActive }) => isActiveCheck(isActive, styles.isActive)}>
+            <NavLink
+              to="/encrypt"
+              className={({ isActive }) =>
+                isActiveCheck(isActive, styles.isActive)
+              }
+            >
               <span>Encrypt</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/decrypt" className={({ isActive }) => isActiveCheck(isActive, styles.isActive)}>
+            <NavLink
+              to="/decrypt"
+              className={({ isActive }) =>
+                isActiveCheck(isActive, styles.isActive)
+              }
+            >
               <span>Decrypt</span>
             </NavLink>
           </li>
@@ -34,5 +64,5 @@ export default function Header() {
 }
 
 export const isActiveCheck = (isActive: boolean, style: string) => {
-  return isActive ? style : '';
+  return isActive ? style : "";
 };

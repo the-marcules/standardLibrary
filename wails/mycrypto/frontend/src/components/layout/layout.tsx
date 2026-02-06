@@ -1,16 +1,16 @@
-import styles from './layout.module.css';
+import styles from "./layout.module.css";
 
-import Header from '../header/header';
-import { Sign } from '../requests/sign/sign';
-import { NotificationProvider } from '../notification/notificationProvider';
-import { NotificationScreen } from '../notification/notification.screen';
-import { BrowserRouter, Route, Routes } from 'react-router';
-import { Verify } from '../requests/verify/verify';
-import Encrypt from '../requests/encrypt/encrypt';
-import Decrypt from '../requests/decrypt/decrypt';
-import Tools from '../Tools/tools';
-import Base64 from '../Tools/base64/base64';
-import { GetKeysString } from '../../../wailsjs/go/cryptokit/Client';
+import Header from "../header/header";
+import { Sign } from "../requests/sign/sign";
+import { NotificationProvider } from "../notification/notificationProvider";
+import { NotificationScreen } from "../notification/notification.screen";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { Verify } from "../requests/verify/verify";
+import Encrypt from "../requests/encrypt/encrypt";
+import Decrypt from "../requests/decrypt/decrypt";
+import Tools from "../Tools/tools";
+import Base64 from "../Tools/base64/base64";
+import { GetKeysString } from "../../../wailsjs/go/cryptokit/Client";
 
 export default function Layout() {
   return (
@@ -21,8 +21,17 @@ export default function Layout() {
           <Tools />
           <div className={styles.content}>
             <Routes>
-              <Route index path="/" element={<div>Choose your cryptographic operation form menu above.</div>} />
-              <Route path="/sign" element={<Sign />} />
+              <Route
+                index
+                path="/"
+                element={
+                  <div>
+                    Choose your cryptographic operation form menu above.
+                  </div>
+                }
+              />
+              <Route path="/sign" element={<Sign codeSign={false} />} />
+              <Route path="/codesign" element={<Sign codeSign={true} />} />
               <Route path="/verify" element={<Verify />} />
               <Route path="/encrypt" element={<Encrypt />} />
               <Route path="/decrypt" element={<Decrypt />} />

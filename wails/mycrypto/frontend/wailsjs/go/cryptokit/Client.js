@@ -26,8 +26,8 @@ export function GetKeysString() {
   return window['go']['cryptokit']['Client']['GetKeysString']();
 }
 
-export function Sign(arg1) {
-  return window['go']['cryptokit']['Client']['Sign'](arg1);
+export function Sign(arg1, arg2) {
+  return window['go']['cryptokit']['Client']['Sign'](arg1, arg2);
 }
 
 export function Verify(arg1, arg2) {

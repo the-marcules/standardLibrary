@@ -11,10 +11,11 @@ type Scenario struct {
 	ScenarioKeyName string
 }
 type Scenarios struct {
-	Sign    Scenario
-	Verify  Scenario
-	Encrypt Scenario
-	Decrypt Scenario
+	Sign     Scenario
+	CodeSign Scenario
+	Verify   Scenario
+	Encrypt  Scenario
+	Decrypt  Scenario
 }
 
 type Config struct {
@@ -44,6 +45,10 @@ func InitConfig() *Config {
 		Scenarios: Scenarios{
 			Sign: Scenario{
 				ScenarioName:    os.Getenv("SCENARIO_SIGN_NAME"),
+				ScenarioKeyName: os.Getenv("SCENARIO_SIGN_KEY_NAME"),
+			},
+			CodeSign: Scenario{
+				ScenarioName:    os.Getenv("SCENARIO_CODE_SIGN_NAME"),
 				ScenarioKeyName: os.Getenv("SCENARIO_SIGN_KEY_NAME"),
 			},
 			Verify: Scenario{

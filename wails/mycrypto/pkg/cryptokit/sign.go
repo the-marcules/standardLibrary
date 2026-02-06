@@ -1,10 +1,16 @@
 package cryptokit
 
 import (
+	"encoding/base64"
 	"log/slog"
+	"os"
 )
 
-func (c *Client) Sign(payload string) string {
+func (c *Client) Sign(payload string, codeSign bool) string {
+
+	if codeSign {
+		payload = getBase64PayloadForCodeSign(payload)
+	}
 
 	data := []byte(`{
 	  "authorization": {
@@ -41,4 +47,13 @@ func (c *Client) Sign(payload string) string {
 	}
 
 	return ResponseBuilder(response, nil)
+}
+
+func getBase64PayloadForCodeSign(filePath string) string {
+	fileContent, err := os.ReadFile(filePath)
+	if err != nil {
+		slog.Error("Error reading the file: ", "error", err)
+		return ResponseBuilder(nil, err)
+	}
+	return base64.StdEncoding.EncodeToString(fileContent)
 }

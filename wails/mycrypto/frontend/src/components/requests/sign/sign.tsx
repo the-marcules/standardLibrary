@@ -1,41 +1,51 @@
-import styles from './sign.module.css';
-import { useState } from 'react';
-import { Sign as CryptokitSign } from '../../../../wailsjs/go/cryptokit/Client';
-import Result from '../../result/result';
-import { useNotification, NotificationTTL, SetTTL } from '../../notification/notificationProvider';
-import Button from '../../Button/Button';
+import styles from "./sign.module.css";
+import { ChangeEvent, useState } from "react";
+import { Sign as CryptokitSign } from "../../../../wailsjs/go/cryptokit/Client";
+import Result from "../../result/result";
+import {
+  useNotification,
+  NotificationTTL,
+  SetTTL,
+} from "../../notification/notificationProvider";
+import Button from "../../Button/Button";
 
-export function Sign() {
+export type SignProps = {
+  codeSign?: boolean;
+};
+
+export function Sign({ codeSign }: SignProps) {
   const [result, setResult] = useState<Response>();
-  const [payload, setPayload] = useState<string>('');
-  const updateName = (e: any) => setPayload(e.target.value);
+  const [payload, setPayload] = useState<string>("");
+  const updateName = (
+    e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>
+  ) => setPayload(e.target.value);
   const notificationService = useNotification();
 
   function handleSign() {
-    if (payload === '') {
+    if (payload === "") {
       notificationService?.addNotification(
-        'warning',
-        'Warning',
-        'Payload cannot be empty. Fill out the payload field and try again, you must.',
+        "warning",
+        "Warning",
+        "Input cannot be empty. Fill out the payload/file field and try again, you must.",
         SetTTL(NotificationTTL.warning)
       );
       return;
     }
 
-    CryptokitSign(payload).then((response) => {
+    CryptokitSign(payload, !!codeSign).then((response) => {
       const responseObject = JSON.parse(response) as Response;
       setResult(responseObject);
       if (responseObject.error.isError) {
         notificationService?.addNotification(
-          'error',
-          'Error',
-          responseObject.error.message || responseObject.description || ''
+          "error",
+          "Error",
+          responseObject.error.message || responseObject.description || ""
         );
       } else {
         notificationService?.addNotification(
-          'success',
-          'Success',
-          'Got a result',
+          "success",
+          "Success",
+          "Got a result",
           Date.now() + NotificationTTL.success
         );
       }
@@ -43,21 +53,30 @@ export function Sign() {
   }
 
   const reset = () => {
-    const textarea = document.querySelector<HTMLTextAreaElement>('#signInput');
+    const textarea = document.querySelector<HTMLTextAreaElement>("#signInput");
     if (textarea) {
-      textarea.value = '';
+      textarea.value = "";
     }
-    setPayload('');
+    setPayload("");
   };
 
   return (
     <>
       <div id="input" className={`inputBox`}>
         <h3>Payload</h3>
-        <label title="Payload">
-          <textarea className={styles.input} onChange={updateName} id="signInput" placeholder="your payload" />
-        </label>
-        <div className={'buttonContainer'}>
+        {/* <label title="Payload">
+          <textarea
+            className={styles.input}
+            onChange={updateName}
+            id="signInput"
+            placeholder="your payload"
+          />
+        </label> */}
+
+        {!codeSign && standardSign({ onChange: updateName })}
+        {codeSign && codeSigningInput({ onChange: updateName })}
+
+        <div className={"buttonContainer"}>
           <Button onClick={() => reset()} variant="secondary">
             Cancel
           </Button>
@@ -67,5 +86,41 @@ export function Sign() {
 
       <Result response={result} title="Response from CryptoKit" />
     </>
+  );
+}
+
+function standardSign({
+  onChange,
+}: {
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+}) {
+  return (
+    <label title="Payload">
+      <textarea
+        className={styles.input}
+        onChange={onChange}
+        id="signInput"
+        placeholder="your payload"
+      />
+    </label>
+  );
+}
+
+function codeSigningInput({
+  onChange,
+}: {
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}) {
+  const [fileName, setFileName] = useState<string>("");
+
+  return (
+    <label title="Select File for Code Signing">
+      <input
+        type="file"
+        className={styles.input}
+        id="codeSignInput"
+        name="file"
+      />
+    </label>
   );
 }

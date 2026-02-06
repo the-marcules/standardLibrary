@@ -14,6 +14,6 @@ export function GetKeys():Promise<Array<cryptokit.Key>>;
 
 export function GetKeysString():Promise<string>;
 
-export function Sign(arg1:string):Promise<string>;
+export function Sign(arg1:string,arg2:boolean):Promise<string>;
 
 export function Verify(arg1:string,arg2:string):Promise<string>;
