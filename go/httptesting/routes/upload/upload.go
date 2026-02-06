@@ -70,10 +70,10 @@ func createFileFromMultipart(r *http.Request) (*FileMeta, int, error) {
 	}
 	defer file.Close()
 
-	wert := r.FormValue("fileMeta")
+	fileMetaStr := r.FormValue("fileMeta")
 
 	var fileMeta FileMeta
-	err = json.Unmarshal([]byte(wert), &fileMeta)
+	err = json.Unmarshal([]byte(fileMetaStr), &fileMeta)
 	if err != nil {
 		err = errors.New(fmt.Sprintf("could not parse file meta data. %s: %s", "error", err.Error()))
 		return nil, http.StatusInternalServerError, err
@@ -86,11 +86,11 @@ func createFileFromMultipart(r *http.Request) (*FileMeta, int, error) {
 	}
 
 	tmpFile, err := os.CreateTemp(tmpDir, "uploaded-*")
-	defer tmpFile.Close()
 	if err != nil {
 		err = errors.New(fmt.Sprintf("could not create temp file. %s: %s", "error", err.Error()))
 		return nil, http.StatusInternalServerError, err
 	}
+	defer tmpFile.Close()
 
 	_, err = io.Copy(tmpFile, file)
 	defer r.Body.Close()
