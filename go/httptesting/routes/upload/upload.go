@@ -53,7 +53,7 @@ func checkFileHash(fileMeta *FileMeta) (int, error) {
 
 	}
 
-	return http.StatusOK, nil
+	return http.StatusCreated, nil
 }
 
 func createFileFromMultipart(r *http.Request) (*FileMeta, int, error) {

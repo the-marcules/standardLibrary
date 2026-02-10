@@ -22,7 +22,7 @@ const (
 )
 
 func Test_upload(t *testing.T) {
-	t.Run("should return status of 200 when file is uploaded", func(t *testing.T) {
+	t.Run("should return status of 201 when file is uploaded", func(t *testing.T) {
 		fileName := "file-to-upload.txt"
 		body, contentType := getMultipartRequestBody(t, fileName, "")
 
@@ -30,7 +30,7 @@ func Test_upload(t *testing.T) {
 		req.Header.Set("Content-Type", contentType)
 		recorder := httptest.NewRecorder()
 		FileUploadHandler(recorder, req)
-		require.Equal(t, http.StatusOK, recorder.Code)
+		require.Equal(t, http.StatusCreated, recorder.Code)
 		require.FileExists(t, "./tmp/file-to-upload.txt")
 	})
 

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Run the pre-commit hook for all staged files
+# This script will run the pre-commit hook for all staged files, even if they are not in the current directory. It will also run the pre-commit hook for all files, even if they are not staged.
+
+golangci-lint run --fix
+go fmt ./...
+go mod tidy
+go mod vendor
+go test -v ./...
