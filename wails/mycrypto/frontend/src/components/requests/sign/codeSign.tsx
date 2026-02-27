@@ -2,11 +2,7 @@ import styles from './sign.module.css'
 import { ChangeEvent, useState } from 'react'
 import { Sign as CryptokitSign } from '../../../../wailsjs/go/cryptokit/Client'
 import Result from '../../result/result'
-import {
-  useNotification,
-  NotificationTTL,
-  SetTTL,
-} from '../../notification/notificationProvider'
+import { useNotification, NotificationTTL, SetTTL } from '../../notification/notificationProvider'
 import Button from '../../Button/Button'
 
 export function CodeSign() {
@@ -49,17 +45,16 @@ export function CodeSign() {
           responseObject.error.message || responseObject.description || ''
         )
       } else {
-        notificationService?.addNotification(
-          'success',
-          'Success',
-          'Got a result',
-          Date.now() + NotificationTTL.success
-        )
+        notificationService?.addNotification('success', 'Success', 'Got a result', Date.now() + NotificationTTL.success)
       }
     })
   }
 
   const reset = () => {
+    const fileInput = document.querySelector('#codeSignInput') as HTMLInputElement | null
+    if (fileInput) {
+      fileInput.value = ''
+    }
     setPayload('')
   }
 
@@ -69,13 +64,7 @@ export function CodeSign() {
         <h3>Payload</h3>
 
         <label title="Select File for Code Signing">
-          <input
-            type="file"
-            className={styles.input}
-            id="codeSignInput"
-            name="file"
-            onChange={updateName}
-          />
+          <input type="file" className={styles.input} id="codeSignInput" name="file" onChange={updateName} />
         </label>
         <div className={'buttonContainer'}>
           <Button onClick={() => reset()} variant="secondary">
@@ -90,21 +79,12 @@ export function CodeSign() {
   )
 }
 
-function codeSigningInput({
-  onChange,
-}: {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-}) {
+function codeSigningInput({ onChange }: { onChange: (e: ChangeEvent<HTMLInputElement>) => void }) {
   const [fileName, setFileName] = useState<string>('')
 
   return (
     <label title="Select File for Code Signing">
-      <input
-        type="file"
-        className={styles.input}
-        id="codeSignInput"
-        name="file"
-      />
+      <input type="file" className={styles.input} id="codeSignInput" name="file" />
     </label>
   )
 }
