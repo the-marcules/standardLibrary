@@ -9,12 +9,22 @@ import {
 } from '../../notification/notificationProvider'
 import Button from '../../Button/Button'
 
-export function Sign() {
+export function CodeSign() {
   const [result, setResult] = useState<Response>()
   const [payload, setPayload] = useState<string>('')
 
-  const updateName = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setPayload(e.target.value)
+  const updateName = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files)
+    const file = e.target.files ? e.target.files[0] : null
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = function () {
+        console.log(reader.result)
+        setPayload(btoa(reader.result as string))
+      }
+      reader.readAsText(file)
+    }
+  }
 
   const notificationService = useNotification()
 
@@ -29,7 +39,7 @@ export function Sign() {
       return
     }
 
-    CryptokitSign(payload, false).then((response) => {
+    CryptokitSign(payload, true).then((response) => {
       const responseObject = JSON.parse(response) as Response
       setResult(responseObject)
       if (responseObject.error.isError) {
@@ -50,10 +60,6 @@ export function Sign() {
   }
 
   const reset = () => {
-    const textarea = document.querySelector<HTMLTextAreaElement>('#signInput')
-    if (textarea) {
-      textarea.value = ''
-    }
     setPayload('')
   }
 
@@ -62,15 +68,15 @@ export function Sign() {
       <div id="input" className={`inputBox`}>
         <h3>Payload</h3>
 
-        <label title="Payload">
-          <textarea
+        <label title="Select File for Code Signing">
+          <input
+            type="file"
             className={styles.input}
+            id="codeSignInput"
+            name="file"
             onChange={updateName}
-            id="signInput"
-            placeholder="your payload"
           />
         </label>
-
         <div className={'buttonContainer'}>
           <Button onClick={() => reset()} variant="secondary">
             Cancel

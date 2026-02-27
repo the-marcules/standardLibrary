@@ -49,7 +49,7 @@ func InitConfig() *Config {
 			},
 			CodeSign: Scenario{
 				ScenarioName:    os.Getenv("SCENARIO_CODE_SIGN_NAME"),
-				ScenarioKeyName: os.Getenv("SCENARIO_SIGN_KEY_NAME"),
+				ScenarioKeyName: os.Getenv("SCENARIO_CODE_SIGN_KEY_NAME"),
 			},
 			Verify: Scenario{
 				ScenarioName:    os.Getenv("SCENARIO_VERIFY_NAME"),

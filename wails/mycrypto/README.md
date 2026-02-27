@@ -1,5 +1,7 @@
 # README
 
+wai
+
 ## About
 
 This is the official Wails React-TS template.

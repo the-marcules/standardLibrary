@@ -1,10 +1,13 @@
 package cryptokit
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"log/slog"
 	"net/http"
+	"os"
+	"strings"
 )
 
 type CryptoKitError struct {
@@ -108,4 +111,56 @@ func NewResponseError(isError bool, message string) *ResponseError {
 		IsError: isError,
 		Message: message,
 	}
+}
+
+func CodeSignResponseBuilder(apiResponse *http.Response, responseError error) string {
+
+	var response []byte
+
+	if responseError != nil {
+		response, _ = json.Marshal(Response{
+			Error: *NewResponseError(true, responseError.Error()),
+		})
+		return string(response)
+	}
+
+	traceId := apiResponse.Header.Get("x-b3-traceid")
+	body, err := io.ReadAll(apiResponse.Body)
+
+	if err != nil {
+		slog.Error("Could not read apiResponse.body: ", "error", err)
+		response, _ = json.Marshal(Response{
+			Error: *NewResponseError(true, err.Error()),
+		})
+		return string(response)
+	}
+
+	var responseObject Response
+	err = json.Unmarshal(body, &responseObject)
+	if err != nil {
+		slog.Error("Error unmarshalling the response: ", "error", err, "body", string(body))
+		response, _ = json.Marshal(Response{
+			Error: *NewResponseError(true, err.Error()),
+		})
+		return string(response)
+	}
+
+	// make new file from the content and return the path in response instead of content
+	decodedContent, _ := base64.StdEncoding.DecodeString(responseObject.SignResponse.Signature.Content)
+	fileContent := string(decodedContent)
+	splittingIndex := strings.Index(fileContent, "#")
+	scriptPart := fileContent[:splittingIndex]
+	signaturePart := fileContent[splittingIndex:]
+	decodedScript, _ := base64.StdEncoding.DecodeString(scriptPart)
+
+	filePath := "signed_script.ps1"
+	os.WriteFile(filePath, append(decodedScript, []byte(signaturePart)...), 0644)
+
+	if responseObject.Code != "" {
+		responseObject.Error.IsError = true
+	}
+	responseObject.TraceID = traceId
+
+	response, _ = json.Marshal(responseObject)
+	return string(response)
 }
