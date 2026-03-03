@@ -10,12 +10,14 @@ func (c *Client) Sign(payload string, codeSign bool) string {
 	scenarioKeyName := c.config.Scenarios.Sign.ScenarioKeyName
 	payloadType := "text-plain"
 	outputPolicy := "JWS"
+	encoding := "PLAIN"
 
 	if codeSign {
 		cryptoScenario = c.config.Scenarios.CodeSign.ScenarioName
 		scenarioKeyName = c.config.Scenarios.CodeSign.ScenarioKeyName
 		payloadType = "application-ps1"
 		outputPolicy = "SIGNATURE_PS1"
+		encoding = "BASE64"
 	}
 
 	data := []byte(`{
@@ -26,7 +28,7 @@ func (c *Client) Sign(payload string, codeSign bool) string {
 	  "input": {
 	    "payload": {
 	      "data": "` + payload + `",
-	      "encoding": "PLAIN"
+	      "encoding": "` + encoding + `"
 	    }
 	  },
 	  "sign": {

@@ -7,7 +7,6 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
-	"strings"
 )
 
 type CryptoKitError struct {
@@ -147,14 +146,9 @@ func CodeSignResponseBuilder(apiResponse *http.Response, responseError error) st
 
 	// make new file from the content and return the path in response instead of content
 	decodedContent, _ := base64.StdEncoding.DecodeString(responseObject.SignResponse.Signature.Content)
-	fileContent := string(decodedContent)
-	splittingIndex := strings.Index(fileContent, "#")
-	scriptPart := fileContent[:splittingIndex]
-	signaturePart := fileContent[splittingIndex:]
-	decodedScript, _ := base64.StdEncoding.DecodeString(scriptPart)
 
 	filePath := "signed_script.ps1"
-	os.WriteFile(filePath, append(decodedScript, []byte(signaturePart)...), 0644)
+	os.WriteFile(filePath, decodedContent, 0644)
 
 	if responseObject.Code != "" {
 		responseObject.Error.IsError = true
