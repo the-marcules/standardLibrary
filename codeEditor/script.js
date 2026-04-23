@@ -1,3 +1,5 @@
+import payload from "./payload.js";
+dsfsFFFASDFSDFd
 class LightEditor {
   constructor(htmlSelector) {
     this.selector = htmlSelector;
@@ -22,7 +24,7 @@ class LightEditor {
     const editor = document.createElement("div");
     editor.className = "editor";
     editor.contentEditable = true;
-    editor.innerText = "{}";
+    editor.innerText = JSON.stringify(payload, null, 2);
 
     this.editorContainer.appendChild(lineNumbers);
     this.editorContainer.appendChild(editor);
@@ -45,7 +47,7 @@ class LightEditor {
         event.preventDefault();
         const selection = document.getSelection();
         const startNode = selection.anchorNode;
-        console.log('selection:', selection);
+        console.log("selection:", selection);
         const cursorPosition = selection.anchorOffset;
         const editorContent = this.editor.innerText;
         console.log(`Tab pressed at position ${cursorPosition}`);
@@ -54,7 +56,6 @@ class LightEditor {
           "\t" +
           editorContent.substring(cursorPosition);
         // Move the cursor to the right after inserting the tab
-       
       }
     });
 

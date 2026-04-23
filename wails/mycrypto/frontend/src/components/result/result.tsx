@@ -1,18 +1,18 @@
-import styles from './result.module.css';
+import styles from './result.module.css'
 
 export type ResultProps = {
-  response?: Response;
-  title?: string;
-};
+  response?: Response
+  title?: string
+}
 
 export default function Result(props: ResultProps): JSX.Element {
   if (!props.response) {
-    return <></>;
+    return <></>
   }
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(JSON.stringify(props.response, null, 2));
-  };
+    navigator.clipboard.writeText(JSON.stringify(props.response, null, 2))
+  }
 
   return (
     <div className={styles.resultContainer}>
@@ -24,5 +24,5 @@ export default function Result(props: ResultProps): JSX.Element {
         </button>
       </pre>
     </div>
-  );
+  )
 }

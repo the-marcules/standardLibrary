@@ -2,6 +2,7 @@ package cryptokit
 
 import (
 	"bytes"
+	"context"
 	"encoding/base64"
 	"mycrypto/pkg/config"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 
 type Client struct {
 	config *config.Config
+	Ctx    context.Context
 }
 
 type AdditionalHeader struct {

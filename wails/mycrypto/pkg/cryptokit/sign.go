@@ -1,7 +1,12 @@
 package cryptokit
 
 import (
+	"encoding/base64"
 	"log/slog"
+	"os"
+	"time"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 func (c *Client) Sign(payload string, codeSign bool) string {
@@ -16,7 +21,7 @@ func (c *Client) Sign(payload string, codeSign bool) string {
 		cryptoScenario = c.config.Scenarios.CodeSign.ScenarioName
 		scenarioKeyName = c.config.Scenarios.CodeSign.ScenarioKeyName
 		payloadType = "application-ps1"
-		outputPolicy = "SIGNATURE_PS1"
+		outputPolicy = "PS1"
 		encoding = "BASE64"
 	}
 
@@ -48,7 +53,10 @@ func (c *Client) Sign(payload string, codeSign bool) string {
 	`)
 	slog.Info("payload", "data", string(data))
 
+	startTime := time.Now()
 	response, err := c.requestHandler("POST", "/v2/sign", data)
+	elapsedTime := time.Since(startTime)
+	slog.Info("Time taken to sign the payload: ", "elapsedTime", elapsedTime)
 
 	if err != nil {
 		slog.Error("Error signing the payload: ", "error", err)
@@ -56,8 +64,36 @@ func (c *Client) Sign(payload string, codeSign bool) string {
 	}
 
 	if codeSign {
-		return CodeSignResponseBuilder(response, nil)
+		return CodeSignResponseBuilder(c.Ctx, response, nil)
 	}
 
 	return ResponseBuilder(response, nil)
+}
+
+func (c *Client) EngageCodeSignProcess() string {
+
+	slog.Info("Engaging code signing process...")
+
+	filename, err := runtime.OpenFileDialog(c.Ctx, runtime.OpenDialogOptions{
+		Title: "Select a file to sign",
+	})
+	if err != nil {
+		slog.Error("Error opening file dialog: ", "error", err)
+		return ""
+	}
+
+	file, err := os.ReadFile(filename)
+	if err != nil {
+		slog.Error("Error reading the file: ", "error", err)
+		return ""
+	}
+
+	base64Payload := base64.StdEncoding.EncodeToString(file)
+
+	return c.Sign(base64Payload, true)
+}
+
+func (c *Client) MakeFileFromResponse(response string) string {
+
+	return ""
 }

@@ -1,12 +1,15 @@
 package cryptokit
 
 import (
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"io"
 	"log/slog"
 	"net/http"
 	"os"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 type CryptoKitError struct {
@@ -112,7 +115,7 @@ func NewResponseError(isError bool, message string) *ResponseError {
 	}
 }
 
-func CodeSignResponseBuilder(apiResponse *http.Response, responseError error) string {
+func CodeSignResponseBuilder(ctx context.Context, apiResponse *http.Response, responseError error) string {
 
 	var response []byte
 
@@ -144,10 +147,14 @@ func CodeSignResponseBuilder(apiResponse *http.Response, responseError error) st
 		return string(response)
 	}
 
-	// make new file from the content and return the path in response instead of content
 	decodedContent, _ := base64.StdEncoding.DecodeString(responseObject.SignResponse.Signature.Content)
 
-	filePath := "signed_script.ps1"
+	filePath, err := runtime.SaveFileDialog(ctx, runtime.SaveDialogOptions{})
+	if err != nil {
+		slog.Error("Error opening save file dialog: ", "error", err)
+		return ""
+	}
+
 	os.WriteFile(filePath, decodedContent, 0644)
 
 	if responseObject.Code != "" {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"fmt"
 	"mycrypto/pkg/config"
@@ -22,6 +23,10 @@ var assets embed.FS
 
 func openFile(data *menu.CallbackData) {
 	fmt.Println("Open file clicked")
+}
+
+func anotherStartupHook() {
+	fmt.Println("This is another startup hook")
 }
 
 func main() {
@@ -60,8 +65,11 @@ func main() {
 			WindowIsTranslucent:  true,
 			WebviewIsTransparent: true,
 		},
-		OnStartup: app.startup,
-		Bind:      []interface{}{app, ckApi},
+		OnStartup: func(ctx context.Context) {
+			app.startup(ctx)
+			ckApi.Ctx = ctx
+		},
+		Bind: []interface{}{app, ckApi},
 	})
 
 	if err != nil {

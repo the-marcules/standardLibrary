@@ -14,6 +14,10 @@ export function Encrypt(arg1, arg2) {
   return window['go']['cryptokit']['Client']['Encrypt'](arg1, arg2);
 }
 
+export function EngageCodeSignProcess() {
+  return window['go']['cryptokit']['Client']['EngageCodeSignProcess']();
+}
+
 export function GetKeyMetaJWK(arg1) {
   return window['go']['cryptokit']['Client']['GetKeyMetaJWK'](arg1);
 }
@@ -24,6 +28,10 @@ export function GetKeys() {
 
 export function GetKeysString() {
   return window['go']['cryptokit']['Client']['GetKeysString']();
+}
+
+export function MakeFileFromResponse(arg1) {
+  return window['go']['cryptokit']['Client']['MakeFileFromResponse'](arg1);
 }
 
 export function Sign(arg1, arg2) {

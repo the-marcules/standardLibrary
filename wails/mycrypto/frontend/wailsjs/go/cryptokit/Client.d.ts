@@ -8,11 +8,15 @@ export function Decrypt(arg1:string,arg2:string):Promise<string>;
 
 export function Encrypt(arg1:string,arg2:string):Promise<string>;
 
+export function EngageCodeSignProcess():Promise<string>;
+
 export function GetKeyMetaJWK(arg1:string):Promise<cryptokit.JWK>;
 
 export function GetKeys():Promise<Array<cryptokit.Key>>;
 
 export function GetKeysString():Promise<string>;
+
+export function MakeFileFromResponse(arg1:string):Promise<string>;
 
 export function Sign(arg1:string,arg2:boolean):Promise<string>;
 

@@ -2,19 +2,14 @@ import styles from './sign.module.css'
 import { ChangeEvent, useState } from 'react'
 import { Sign as CryptokitSign } from '../../../../wailsjs/go/cryptokit/Client'
 import Result from '../../result/result'
-import {
-  useNotification,
-  NotificationTTL,
-  SetTTL,
-} from '../../notification/notificationProvider'
+import { useNotification, NotificationTTL, SetTTL } from '../../notification/notificationProvider'
 import Button from '../../Button/Button'
 
 export function Sign() {
   const [result, setResult] = useState<Response>()
   const [payload, setPayload] = useState<string>('')
 
-  const updateName = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setPayload(e.target.value)
+  const updateName = (e: ChangeEvent<HTMLTextAreaElement>) => setPayload(e.target.value)
 
   const notificationService = useNotification()
 
@@ -39,12 +34,7 @@ export function Sign() {
           responseObject.error.message || responseObject.description || ''
         )
       } else {
-        notificationService?.addNotification(
-          'success',
-          'Success',
-          'Got a result',
-          Date.now() + NotificationTTL.success
-        )
+        notificationService?.addNotification('success', 'Success', 'Got a result', Date.now() + NotificationTTL.success)
       }
     })
   }
@@ -63,12 +53,7 @@ export function Sign() {
         <h3>Payload</h3>
 
         <label title="Payload">
-          <textarea
-            className={styles.input}
-            onChange={updateName}
-            id="signInput"
-            placeholder="your payload"
-          />
+          <textarea className={styles.input} onChange={updateName} id="signInput" placeholder="your payload" />
         </label>
 
         <div className={'buttonContainer'}>
@@ -84,21 +69,12 @@ export function Sign() {
   )
 }
 
-function codeSigningInput({
-  onChange,
-}: {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
-}) {
+function codeSigningInput({ onChange }: { onChange: (e: ChangeEvent<HTMLInputElement>) => void }) {
   const [fileName, setFileName] = useState<string>('')
 
   return (
     <label title="Select File for Code Signing">
-      <input
-        type="file"
-        className={styles.input}
-        id="codeSignInput"
-        name="file"
-      />
+      <input type="file" className={styles.input} id="codeSignInput" name="file" />
     </label>
   )
 }
