@@ -19,13 +19,11 @@ type Scenarios struct {
 }
 
 type Config struct {
-	ApiUserName         string
-	AccountName         string
-	ScenarioEncryptName string
-	AccessKey           string
-	SecretKey           string
-	BaseUrl             string
-	Scenarios           Scenarios
+	AccountName string
+	AccessKey   string
+	SecretKey   string
+	BaseUrl     string
+	Scenarios   Scenarios
 }
 
 func InitConfig() *Config {
@@ -36,12 +34,10 @@ func InitConfig() *Config {
 	}
 
 	return &Config{
-		ApiUserName:         os.Getenv("API_USER_NAME"),
-		AccountName:         os.Getenv("ACCOUNT_NAME"),
-		ScenarioEncryptName: os.Getenv("SCENARIO_ENCRYPT_NAME"),
-		AccessKey:           os.Getenv("API_ACCESS_KEY"),
-		SecretKey:           os.Getenv("API_SECRET_KEY"),
-		BaseUrl:             os.Getenv("BASE_URL"),
+		AccountName: os.Getenv("ACCOUNT_NAME"),
+		AccessKey:   os.Getenv("API_ACCESS_KEY"),
+		SecretKey:   os.Getenv("API_SECRET_KEY"),
+		BaseUrl:     os.Getenv("BASE_URL"),
 		Scenarios: Scenarios{
 			Sign: Scenario{
 				ScenarioName:    os.Getenv("SCENARIO_SIGN_NAME"),
