@@ -27,7 +27,7 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 RUN wp --info
-RUN php -d memory_limit=512M /usr/local/bin/wp core download --allow-root
+RUN php -d memory_limit=512M /usr/local/bin/wp core download --locale=de_DE --version=latest --allow-root
 
 
 COPY src/woody-products.zip /var/www/html/wordpress/woody-products.zip

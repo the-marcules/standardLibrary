@@ -96,6 +96,12 @@ wp menu item add-post "$FOOTER_MENU_NAME" $DATENSCHUTZ_ID --allow-root
 IMPRESSUM_ID=$(wp post create --post_type=page --post_title="Impressum" --post_content="" --post_status=publish --porcelain --allow-root)
 wp menu item add-post "$FOOTER_MENU_NAME" $IMPRESSUM_ID --allow-root
 
+# Seite "Widerruf"
+REVOKE_ORDER=$(wp post create --post_type=page --post_title="Widerruf" --post_content="" --post_status=publish --porcelain --allow-root)
+wp post meta update $REVOKE_ORDER _wp_page_template revoke-order-form.php --allow-root
+wp menu item add-post "$FOOTER_MENU_NAME" $REVOKE_ORDER --allow-root
+
+
 # Testprodukt anlegen
 TEST_PRODUCT=$(wp post create --post_type=wopro_product --post_title="Testprodukt" --post_content="Dies ist ein Testprodukt." --post_status=publish --porcelain --allow-root)
 wp post meta update $TEST_PRODUCT price 25.99 --allow-root

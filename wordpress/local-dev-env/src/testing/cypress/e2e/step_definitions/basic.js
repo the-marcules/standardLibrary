@@ -25,15 +25,20 @@ Then("I see the footer navigation menu", () => {
   cy.get("footer #menu-footer")
     .should("be.visible")
     .children()
-    .should("have.length", 3);
+    .should("have.length", 4);
 });
 
 When("I click on the {string} link in the top navigation menu", (linkText) => {
   cy.get("#menu-haupt").contains(linkText).click();
 });
 
+When("I click on the {string} link in the footer menu", (linkText) => {
+  cy.get("footer").contains(linkText).click();
+});
+
+
 Then("I see {string} in the {string} content area", (text, region) => {
-  cy.get(region).contains(text);
+  cy.get(region).should("include.text", text);
 });
 
 Then("I do not see {string} in the {string} content area", (text, region) => {
@@ -86,4 +91,8 @@ Then("I see no error or warning within the element {string}", (selector) => {
     .should("not.contain.text", "Warning")
     .should("not.contain.text", "Notice")
     .should("not.contain.text", "Fatal");
+});
+
+When("I fill out the {string} field with {string}", (fieldName, value) => {
+  cy.get(`*[name="${fieldName}"]`).should("be.visible").type(value);
 });
